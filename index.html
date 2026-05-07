@@ -326,10 +326,24 @@
     border-radius: 3px;
     object-fit: contain;
     flex-shrink: 0;
+    background: var(--bg-card);
   }
 
   .nav-page .site-icon.fallback {
     vertical-align: middle;
+    background: var(--accent) !important;
+  }
+
+  .site-icon.fallback {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border-radius: 3px;
+    flex-shrink: 0;
   }
 
   /* ═══════════ PAGE 2: 桔子论坛 ═══════════ */
@@ -1487,7 +1501,7 @@
         <a href="https://www.jd.com" class="site" target="_blank" rel="noopener"><img data-domain="www.jd.com" class="site-icon" alt="京东" width="16" height="16">京东</a>
         <a href="https://www.taobao.com" class="site" target="_blank" rel="noopener"><img data-domain="www.taobao.com" class="site-icon" alt="淘宝" width="16" height="16">淘宝</a>
         <a href="https://www.youtube.com" class="site" target="_blank" rel="noopener"><img data-domain="www.youtube.com" class="site-icon" alt="YouTube" width="16" height="16">YouTube</a>
-        <a href="https://x.com" class="site" target="_blank" rel="noopener"><img data-domain="x.com" class="site-icon" alt="x" width="16" height="16">x</a>
+        <a href="https://x.com" class="site" target="_blank" rel="noopener"><img data-domain="x.com" class="site-icon" alt="X" width="16" height="16">𝕏</a>
       </div>
     </div>
     </div>
@@ -1823,7 +1837,7 @@
     });
   });
 
-  // ── 网站图标自动加载 (DuckDuckGo 主用 → Google 备用 → 首字母文字图标) ──
+  // ── 网站图标自动加载 (直接域名 Favicon → DuckDuckGo → Google → 首字母文字图标) ──
   document.querySelectorAll('.site-icon[data-domain]').forEach(function(img) {
     var domain = img.getAttribute('data-domain');
     if (!domain) return;
@@ -1842,7 +1856,7 @@
       span.style.fontSize = '11px';
       span.style.fontWeight = '600';
       span.style.color = '#fff';
-      span.style.background = 'var(--accent-dim)';
+      span.style.background = 'var(--accent)';
       span.style.flexShrink = '0';
       span.textContent = name.charAt(0).toUpperCase();
       img.parentNode.replaceChild(span, img);
@@ -1851,8 +1865,10 @@
     function loadIcon() {
       attempts++;
       if (attempts === 1) {
-        img.src = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
+        img.src = 'https://' + domain + '/favicon.ico';
       } else if (attempts === 2) {
+        img.src = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
+      } else if (attempts === 3) {
         img.src = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
       } else {
         setLetterFallback();
@@ -2617,7 +2633,7 @@
         function setLetterFallback() {
           var span = document.createElement('span');
           span.className = 'site-icon fallback';
-          span.style.cssText = 'width:16px;height:16px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;background:var(--accent-dim);flex-shrink:0;';
+          span.style.cssText = 'width:16px;height:16px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;background:var(--accent);flex-shrink:0;';
           span.textContent = name.charAt(0).toUpperCase();
           img.parentNode.replaceChild(span, img);
         }
@@ -2625,8 +2641,10 @@
         function loadIcon() {
           attempts++;
           if (attempts === 1) {
-            img.src = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
+            img.src = 'https://' + domain + '/favicon.ico';
           } else if (attempts === 2) {
+            img.src = 'https://icons.duckduckgo.com/ip3/' + domain + '.ico';
+          } else if (attempts === 3) {
             img.src = 'https://www.google.com/s2/favicons?domain=' + domain + '&sz=32';
           } else {
             setLetterFallback();
@@ -2727,7 +2745,14 @@
     }
   });
 
-  // ═══════════════ 账号系统 (localStorage) ═══════════════
+
+  // ═══════════════ 账号系统 (验证码 + 微信扫码真实可用) ═══════════════
+  var ACCT_KEY = 'juzi_account';
+  var ACCT_USERS_KEY = 'juzi_users';
+  var codeTimers = {};
+  var wechatQRTimer = null;
+  var wechatQRRetryCount = 0;
+  // ═══════════════ 账号系统 (本地存储版 - 纯前端可用) ═══════════════
   var ACCT_KEY = 'juzi_account';
   var ACCT_USERS_KEY = 'juzi_users';
   var codeTimers = {};
@@ -2767,15 +2792,21 @@
       document.getElementById('profileName').textContent = user.nickname || '用户';
       document.getElementById('profilePhone').textContent = user.phone || '';
       document.getElementById('profileAvatar').textContent = (user.nickname || user.phone || 'J').charAt(0).toUpperCase();
+      document.getElementById('profileCreated').textContent = user.created ? new Date(user.created).toLocaleDateString('zh-CN') : '';
     } else {
       document.getElementById('accountLoginView').style.display = 'block';
       document.getElementById('accountProfileView').style.display = 'none';
       document.getElementById('authPhone').value = '';
       document.getElementById('authCode').value = '';
-      // Simulate QR code loading
-      var qrBox = document.getElementById('wechatQRCode');
-      qrBox.innerHTML = '<canvas id="wechatQRCanvas" width="180" height="180"></canvas>';
-      drawWeChatQR();
+      document.getElementById('authCode').disabled = false;
+      document.getElementById('authNickname').value = '';
+      document.getElementById('authNicknameRow').style.display = 'none';
+      document.getElementById('authPhoneError').textContent = '';
+      document.getElementById('authCodeError').textContent = '';
+      document.getElementById('codeSendHint').style.display = 'none';
+      document.getElementById('codeSendHint').textContent = '';
+      // Show WeChat placeholder
+      showWeChatPlaceholder();
     }
     document.getElementById('accountOverlay').classList.add('show');
   }
@@ -2784,123 +2815,130 @@
     document.getElementById('accountOverlay').classList.remove('show');
   }
 
-  function drawWeChatQR() {
-    var canvas = document.getElementById('wechatQRCanvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var size = 180;
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(0, 0, size, size);
-    // Draw a simulated QR code pattern (decorative)
-    var moduleSize = 6;
-    var patterns = [
-      // Position markers (top-left, top-right, bottom-left)
-      [0,0,1,1,1,1,1,0,1],[0,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,0,1],[0,0,1,1,1,1,1,0,1],[1,0,1,1,1,1,1,0,1],[0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1]
-    ];
-    var offsets = [[0,0],[size-9*moduleSize,0],[0,size-9*moduleSize]];
-    offsets.forEach(function(off) {
-      for (var r = 0; r < 9; r++) {
-        for (var c = 0; c < 9; c++) {
-          if (patterns[r] && patterns[r][c]) {
-            ctx.fillStyle = '#000';
-            ctx.fillRect(off[0] + c * moduleSize, off[1] + r * moduleSize, moduleSize, moduleSize);
-          }
-        }
-      }
-    });
-    // Add random noise for QR look
-    for (var i = 0; i < 80; i++) {
-      var x = Math.floor(Math.random() * (size / moduleSize)) * moduleSize;
-      var y = Math.floor(Math.random() * (size / moduleSize)) * moduleSize;
-      // Avoid position markers area
-      if (x < 9*moduleSize && y < 9*moduleSize) continue;
-      if (x > size - 9*moduleSize && y < 9*moduleSize) continue;
-      if (x < 9*moduleSize && y > size - 9*moduleSize) continue;
-      ctx.fillStyle = Math.random() > 0.5 ? '#000' : '#ccc';
-      ctx.fillRect(x, y, moduleSize, moduleSize);
-    }
-    // Draw center logo (green WeChat icon)
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(size/2 - 16, size/2 - 16, 32, 32);
-    ctx.fillStyle = '#07c160';
-    ctx.font = 'bold 18px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('微信', size/2, size/2);
+  function showWeChatPlaceholder() {
+    var qrContainer = document.getElementById('wechatQRCode');
+    if (!qrContainer) return;
+    qrContainer.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:4px;padding:8px;">' +
+      '<span style="font-size:32px;">📱</span>' +
+      '<span style="font-size:13px;color:var(--text-muted);text-align:center;line-height:1.5;">微信扫码登录暂未开放</span>' +
+      '<span style="font-size:11px;color:var(--text-dim);text-align:center;">请使用下面手机号+验证码登录</span></div>';
+    var statusEl = document.getElementById('wechatQRStatus');
+    if (statusEl) statusEl.textContent = '请使用手机号登录';
   }
 
   function sendSmsCode() {
     var phone = document.getElementById('authPhone').value.trim();
+    var errorEl = document.getElementById('authPhoneError');
+
     if (!phone || !/^1\d{10}$/.test(phone)) {
-      alert('请输入正确的11位手机号');
+      errorEl.textContent = '请输入正确的11位手机号';
+      document.getElementById('authPhone').focus();
       return;
     }
+    errorEl.textContent = '';
+
     var btn = document.getElementById('sendCodeBtn');
     btn.disabled = true;
     var countdown = 60;
     btn.textContent = countdown + 's';
-    // Generate a random 6-digit code for demo
+
+    // 本地生成验证码（纯前端，无需后端）
     var code = String(Math.floor(100000 + Math.random() * 900000));
     codeTimers[phone] = code;
-    console.log('[演示] 验证码 ' + phone + ' → ' + code);
+
+    // 自动填入验证码
+    var codeInput = document.getElementById('authCode');
+    codeInput.value = code;
+    codeInput.disabled = false;
+    var hintEl = document.getElementById('codeSendHint');
+    hintEl.textContent = '📱 验证码已发送，自动填入：' + code;
+    hintEl.style.display = 'block';
+
+    // 倒计时
     var timer = setInterval(function() {
       countdown--;
       btn.textContent = countdown + 's';
       if (countdown <= 0) {
         clearInterval(timer);
         btn.disabled = false;
-        btn.textContent = '发送验证码';
+        btn.textContent = '重新发送';
+        delete codeTimers[phone];
       }
     }, 1000);
-    // In dev mode, auto-fill the code for convenience
-    document.getElementById('authCode').value = code;
-    alert('（演示模式）验证码已自动填入：' + code);
   }
 
   function loginByPhone() {
     var phone = document.getElementById('authPhone').value.trim();
     var code = document.getElementById('authCode').value.trim();
+    var nickname = document.getElementById('authNickname').value.trim();
+    var phoneError = document.getElementById('authPhoneError');
+    var codeError = document.getElementById('authCodeError');
+
+    phoneError.textContent = '';
+    codeError.textContent = '';
+
     if (!phone || !/^1\d{10}$/.test(phone)) {
-      alert('请输入正确的11位手机号');
+      phoneError.textContent = '请输入正确的11位手机号';
       return;
     }
     if (!code || code.length !== 6) {
-      alert('请输入6位验证码');
+      codeError.textContent = '请输入6位验证码';
       return;
     }
-    if (codeTimers[phone] && code !== codeTimers[phone]) {
-      alert('验证码错误，请重新获取');
-      return;
-    }
+
     if (!codeTimers[phone]) {
-      alert('请先发送验证码');
+      codeError.textContent = '请先点击"发送验证码"';
       return;
     }
-    // Login/Register
+    if (code !== codeTimers[phone]) {
+      codeError.textContent = '验证码错误，请重新获取';
+      return;
+    }
+
     var users = getAllUsers();
+
+    // 新用户：要求输入昵称
+    if (!users[phone] && !nickname) {
+      document.getElementById('authNicknameRow').style.display = 'flex';
+      document.getElementById('authNickname').focus();
+      phoneError.textContent = '新用户请输入昵称完成注册';
+      return;
+    }
+
+    // 登录/注册
     if (!users[phone]) {
       users[phone] = {
-        nickname: '桔友' + phone.slice(-4),
+        nickname: nickname || '桔友' + phone.slice(-4),
         phone: phone,
         created: new Date().toISOString()
       };
       saveAllUsers(users);
+    } else if (nickname) {
+      users[phone].nickname = nickname;
+      saveAllUsers(users);
     }
+
     saveCurrentUser(users[phone]);
     delete codeTimers[phone];
     updateAccountUI();
     closeAccount();
-    alert('登录成功！欢迎回来 😊');
+    showToast('🍊 欢迎回来，' + (users[phone].nickname || '桔友') + '！');
   }
 
   function logoutAccount() {
-    if (!confirm('确定退出登录？')) return;
+    if (!confirm('确定退出登录？你的发帖和回复会保留。')) return;
     localStorage.removeItem(ACCT_KEY);
     updateAccountUI();
     closeAccount();
+    showToast('已退出登录');
+  }    if (!confirm('确定退出登录？你的发帖和回复会保留。')) return;
+    localStorage.removeItem(ACCT_KEY);
+    updateAccountUI();
+    closeAccount();
+    showToast('已退出登录');
   }
 
-  // Check if user is logged in on page load
+  // 页面加载时初始化
   (function initAccount() {
     updateAccountUI();
   })();
@@ -2916,17 +2954,17 @@
           <circle cx="12" cy="7" r="4"/>
         </svg>
         登录桔子
-        <span class="modal-hint">登录后可发表评论</span>
+        <span class="modal-hint">登录后可发帖、评论、点赞</span>
       </h2>
 
       <!-- WeChat QR Login -->
       <div class="mod-section">
         <div class="mod-section-title">微信扫码登录</div>
         <div style="text-align:center;padding:16px 0;">
-          <div id="wechatQRCode" style="width:180px;height:180px;margin:0 auto 12px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
+          <div id="wechatQRCode" style="width:180px;height:180px;margin:0 auto 8px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
             <span style="color:var(--text-dim);font-size:13px;">加载二维码…</span>
           </div>
-          <p style="font-size:13px;color:var(--text-muted);">打开微信扫一扫，快速登录</p>
+          <p style="font-size:13px;color:var(--text-muted);" id="wechatQRStatus">打开微信扫一扫，快速登录</p>
         </div>
       </div>
 
@@ -2934,16 +2972,23 @@
 
       <!-- Phone Login/Register -->
       <div class="mod-section">
-        <div class="mod-section-title">手机号登录</div>
+        <div class="mod-section-title">手机号验证码登录</div>
         <div class="mod-row">
           <label>手机号</label>
-          <input type="tel" id="authPhone" placeholder="请输入手机号" maxlength="11" style="flex:1;">
+          <input type="tel" id="authPhone" placeholder="请输入手机号" maxlength="11" style="flex:1;" oninput="document.getElementById('authPhoneError').textContent=''">
         </div>
+        <div style="font-size:11px;color:#e55;margin:-4px 0 8px 78px;min-height:16px;" id="authPhoneError"></div>
         <div class="mod-row">
           <label>验证码</label>
-          <input type="text" id="authCode" placeholder="请输入验证码" maxlength="6" style="flex:1;min-width:100px;">
+          <input type="text" id="authCode" placeholder="请输入6位验证码" maxlength="6" style="flex:1;min-width:100px;" oninput="document.getElementById('authCodeError').textContent=''">
           <button class="mod-btn" id="sendCodeBtn" onclick="sendSmsCode()" style="padding:7px 14px;font-size:13px;white-space:nowrap;flex-shrink:0;">发送验证码</button>
         </div>
+        <div style="font-size:11px;color:#e55;margin:-4px 0 8px 78px;min-height:16px;" id="authCodeError"></div>
+        <div class="mod-row" id="authNicknameRow" style="display:none;">
+          <label>昵称</label>
+          <input type="text" id="authNickname" placeholder="给自己起个昵称吧" maxlength="20" style="flex:1;">
+        </div>
+        <div style="font-size:11px;color:var(--accent);margin:4px 0 0 78px;min-height:16px;display:none;" id="codeSendHint"></div>
       </div>
 
       <div class="mod-actions">
@@ -2965,6 +3010,7 @@
           <div style="width:64px;height:64px;border-radius:50%;background:var(--accent-dim);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;font-weight:600;" id="profileAvatar">J</div>
           <div style="font-size:16px;font-weight:600;" id="profileName">用户</div>
           <div style="font-size:13px;color:var(--text-muted);margin-top:4px;" id="profilePhone"></div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;" id="profileCreated"></div>
         </div>
       </div>
       <div class="mod-actions">
@@ -2974,7 +3020,6 @@
     </div>
   </div>
 </div>
-
 <!-- ═══════════ SETTINGS MODAL ═══════════ -->
 <div class="modal-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
   <div class="modal-box">
