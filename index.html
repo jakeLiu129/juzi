@@ -50,7 +50,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 16px;
-    padding: 20px 0 54px;
+    padding: 20px 0 27px;
     padding-left: 1em;
     box-sizing: border-box;
   }
@@ -140,7 +140,7 @@
   .nav-page .search-wrap {
     display: inline-flex;
     align-items: stretch;
-    border: 1px solid var(--border);
+    border: 2px solid #1a1a1a;
     border-radius: var(--radius);
     background: var(--bg-card);
     max-width: 560px;
@@ -149,8 +149,8 @@
   }
 
   .nav-page .search-wrap:focus-within {
-    border-color: #333;
-    box-shadow: 0 0 0 3px #f0f0f0;
+    border-color: #000;
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
   }
 
   /* Engine Selector */
@@ -159,37 +159,41 @@
     align-items: center;
     gap: 4px;
     padding: 10px 14px;
-    background: #f5f5f5;
+    background: #fff;
     border: none;
-    border-right: 1px solid var(--border);
+    border-right: 2px solid #1a1a1a;
     border-radius: var(--radius) 0 0 var(--radius);
     cursor: pointer;
-    font-size: 13px;
-    color: #666;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
     white-space: nowrap;
     transition: background 0.2s;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
 
   .search-engine-btn:hover {
-    background: #eee;
+    background: #f0f0f0;
   }
 
   .search-engine-btn .favicon {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border-radius: 2px;
-    filter: saturate(0.5) opacity(0.78);
-    transition: filter 0.35s ease;
+    filter: none;
+    transition: filter 0.2s ease;
   }
 
   .search-engine-btn:hover .favicon {
-    filter: saturate(1) opacity(1);
+    filter: none;
   }
 
   .search-engine-btn .arrow {
-    width: 12px;
-    height: 12px;
-    opacity: 0.5;
+    width: 14px;
+    height: 14px;
+    opacity: 1;
+    color: #1a1a1a;
+    stroke-width: 2.5;
     transition: transform 0.2s;
   }
 
@@ -202,11 +206,11 @@
     top: 100%;
     left: 0;
     background: var(--bg-card);
-    border: 1px solid var(--border);
+    border: 2px solid #1a1a1a;
     border-radius: var(--radius);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
     display: none;
-    min-width: 160px;
+    min-width: 180px;
     z-index: 100;
     max-height: 320px;
     overflow-y: auto;
@@ -221,10 +225,12 @@
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    font-size: 13px;
-    color: #555;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
     cursor: pointer;
     transition: background 0.2s;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
 
   .engine-option:first-child {
@@ -236,25 +242,25 @@
   }
 
   .engine-option:hover {
-    background: var(--accent-light);
+    background: #f0f0f0;
   }
 
   .engine-option.active {
-    color: var(--accent);
-    font-weight: 600;
-    background: var(--accent-light);
+    color: #1a1a1a;
+    font-weight: 700;
+    background: #f0f0f0;
   }
 
   .engine-option .favicon {
     width: 16px;
     height: 16px;
     border-radius: 3px;
-    filter: saturate(0.5) opacity(0.78);
-    transition: filter 0.35s ease;
+    filter: none;
+    transition: filter 0.2s ease;
   }
 
   .engine-option:hover .favicon {
-    filter: saturate(1) opacity(1);
+    filter: none;
   }
 
   .engine-option .eo-label {
@@ -272,15 +278,18 @@
   .search-engine-selector {
     position: relative;
     z-index: 10;
+    display: flex;
+    align-items: stretch;
   }
 
   /* Search Input */
   .nav-page .search-icon {
     padding: 0 0 0 14px;
-    opacity: 0.3;
+    opacity: 0.6;
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    color: #1a1a1a;
   }
 
   .nav-page .search-input {
@@ -291,9 +300,11 @@
     font-size: 15px;
     background: transparent;
     color: var(--text);
+    font-weight: 600;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
 
-  .nav-page .search-input::placeholder { color: var(--text-dim); }
+  .nav-page .search-input::placeholder { color: #999; font-weight: 600; }
 
   /* Search Button */
   .search-btn {
@@ -307,12 +318,14 @@
     border: none;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 700;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
     border-radius: 0 var(--radius) var(--radius) 0;
     transition: background 0.2s;
   }
 
   .search-btn:hover {
-    background: #333;
+    background: #000;
   }
 
   .nav-page .section {
@@ -656,27 +669,30 @@
   /* ── Footer ── */
   footer {
     text-align: center;
-    padding: 32px 0;
+    padding: 16px 0 32px;
     border-top: 1px solid var(--border);
-    color: var(--text-dim);
-    font-size: 12px;
-    letter-spacing: 0.05em;
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'STHeiti', 'Noto Sans SC', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     flex-wrap: wrap;
   }
 
   footer a {
-    color: var(--text-dim);
+    color: #1a1a1a;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    font-weight: 900;
   }
 
-  footer a:hover { color: var(--text-muted); }
+  footer a:hover { color: #000; background: #f5f5f5; }
 
   footer .sep { margin: 0 8px; }
 
@@ -839,20 +855,23 @@
   .nav-settings-btn {
     background: none;
     border: none;
-    color: var(--text-dim);
-    font-size: 12px;
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 900;
     cursor: pointer;
-    padding: 2px 6px;
+    padding: 4px 8px;
     border-radius: 4px;
     display: inline-flex;
     align-items: center;
-    gap: 3px;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
+    gap: 4px;
+    letter-spacing: 0.06em;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'STHeiti', 'Noto Sans SC', sans-serif;
+    transition: color 0.2s, background 0.2s;
   }
 
   .nav-settings-btn:hover {
-    color: var(--accent);
+    color: #000;
+    background: #f5f5f5;
   }
 
   .mod-section .mod-hint {
@@ -931,13 +950,13 @@
       <div class="search-wrap" id="searchWrap">
         <div class="search-engine-selector">
           <button class="search-engine-btn" id="engineBtn">
-            <img src="https://www.bing.com/favicon.ico" alt="" class="favicon" id="engineFavicon">
-            <span id="engineName">必应</span>
+            <img src="https://www.google.com/favicon.ico" alt="" class="favicon" id="engineFavicon">
+            <span id="engineName">Google</span>
             <svg class="arrow" id="engineArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="engine-dropdown" id="engineDropdown">
-            <div class="engine-option active" data-engine="bing" data-url="https://www.bing.com/search?q="><img src="https://www.bing.com/favicon.ico" class="favicon"><span class="eo-label">必应</span><span class="eo-group">搜索</span></div>
-            <div class="engine-option" data-engine="google" data-url="https://www.google.com/search?q="><img src="https://www.google.com/favicon.ico" class="favicon"><span class="eo-label">Google</span><span class="eo-group">搜索</span></div>
+            <div class="engine-option" data-engine="bing" data-url="https://www.bing.com/search?q="><img src="https://www.bing.com/favicon.ico" class="favicon"><span class="eo-label">必应</span><span class="eo-group">搜索</span></div>
+            <div class="engine-option active" data-engine="google" data-url="https://www.google.com/search?q="><img src="https://www.google.com/favicon.ico" class="favicon"><span class="eo-label">Google</span><span class="eo-group">搜索</span></div>
             <div class="engine-option" data-engine="baidu" data-url="https://www.baidu.com/s?wd="><img src="https://www.baidu.com/favicon.ico" class="favicon"><span class="eo-label">百度</span><span class="eo-group">搜索</span></div>
             <div class="engine-option" data-engine="sogou" data-url="https://www.sogou.com/web?query="><img src="https://www.sogou.com/favicon.ico" class="favicon"><span class="eo-label">搜狗</span><span class="eo-group">搜索</span></div>
             <div class="engine-option" data-engine="360" data-url="https://www.so.com/s?q="><img src="https://www.so.com/favicon.ico" class="favicon"><span class="eo-label">360搜索</span><span class="eo-group">搜索</span></div>
@@ -1237,26 +1256,14 @@
 
 <!-- ═══════════ FOOTER ═══════════ -->
 <footer>
-  <a href="#">
-    <img src="logo.png" alt="桔子" style="height:14px;width:auto;vertical-align:middle;opacity:0.6;">
-    桔子
-  </a>
-  <span class="sep">·</span>
   <span>www.juzi.cool</span>
+  <span class="sep">·</span>
   <button class="nav-settings-btn" onclick="openSettings()">
-    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
       <circle cx="12" cy="12" r="3"/>
       <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
     </svg>
     设置
-  </button>
-  <span class="sep">·</span>
-  <button class="nav-settings-btn" onclick="openAccount()">
-    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
-    </svg>
-    <span id="accountBtnLabel">账号</span>
   </button>
 </footer>
 
@@ -1330,7 +1337,7 @@
   var engineName = document.getElementById('engineName');
   var engineArrow = document.getElementById('engineArrow');
 
-  var currentEngineUrl = 'https://www.bing.com/search?q=';
+  var currentEngineUrl = 'https://www.google.com/search?q=';
 
   function doSearch() {
     var q = (searchInput.value || '').trim();
@@ -1708,469 +1715,9 @@
   });
 
 
-  // ═══════════════ 账号系统 (验证码 + 微信扫码真实可用) ═══════════════
-  var ACCT_KEY = 'juzi_account';
-  var ACCT_USERS_KEY = 'juzi_users';
-  var codeTimers = {};
-  var wechatQRTimer = null;
-  var wechatQRRetryCount = 0;
-  var WECHAT_QR_MAX_RETRIES = 20;
-
-  function getCurrentUser() {
-    try { return JSON.parse(localStorage.getItem(ACCT_KEY)) || null; } catch(e) { return null; }
-  }
-
-  function saveCurrentUser(user) {
-    localStorage.setItem(ACCT_KEY, JSON.stringify(user));
-  }
-
-  function getAllUsers() {
-    try { return JSON.parse(localStorage.getItem(ACCT_USERS_KEY)) || {}; } catch(e) { return {}; }
-  }
-
-  function saveAllUsers(users) {
-    localStorage.setItem(ACCT_USERS_KEY, JSON.stringify(users));
-  }
-
-  function updateAccountUI() {
-    var user = getCurrentUser();
-    var label = document.getElementById('accountBtnLabel');
-    if (user) {
-      label.textContent = user.nickname || user.phone;
-    } else {
-      label.textContent = '账号';
-    }
-  }
-
-  function openAccount() {
-    var user = getCurrentUser();
-    if (user) {
-      document.getElementById('accountLoginView').style.display = 'none';
-      var pv = document.getElementById('accountProfileView');
-      pv.style.display = 'block';
-      document.getElementById('profileName').textContent = user.nickname || '用户';
-      document.getElementById('profilePhone').textContent = user.phone || '';
-      document.getElementById('profileAvatar').textContent = (user.nickname || user.phone || 'J').charAt(0).toUpperCase();
-      document.getElementById('profileCreated').textContent = user.created ? new Date(user.created).toLocaleDateString('zh-CN') : '';
-    } else {
-      document.getElementById('accountLoginView').style.display = 'block';
-      document.getElementById('accountProfileView').style.display = 'none';
-      document.getElementById('authPhone').value = '';
-      document.getElementById('authCode').value = '';
-      document.getElementById('authCode').disabled = false;
-      document.getElementById('authNickname').value = '';
-      document.getElementById('authNicknameRow').style.display = 'none';
-      document.getElementById('authPhoneError').textContent = '';
-      document.getElementById('authCodeError').textContent = '';
-      document.getElementById('codeSendHint').style.display = 'none';
-      document.getElementById('codeSendHint').textContent = '';
-      // 真实微信扫码：尝试从 server 拉取二维码
-      stopWeChatQRPoll();
-      wechatQRRetryCount = 0;
-      fetchWeChatQR();
-    }
-    document.getElementById('accountOverlay').classList.add('show');
-  }
-
-  function closeAccount() {
-    document.getElementById('accountOverlay').classList.remove('show');
-    stopWeChatQRPoll();
-  }
-
-  // ── 微信扫码登录（真实二维码 + 轮询扫码状态） ──
-  function stopWeChatQRPoll() {
-    if (wechatQRTimer) {
-      clearTimeout(wechatQRTimer);
-      wechatQRTimer = null;
-    }
-  }
-
-  function fetchWeChatQR() {
-    var qrContainer = document.getElementById('wechatQRCode');
-    if (!qrContainer) return;
-
-    function showLoading() {
-      qrContainer.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:8px;">' +
-        '<div style="width:32px;height:32px;border:3px solid #eee;border-top:3px solid var(--accent);border-radius:50%;animation:qrSpin 0.8s linear infinite;"></div>' +
-        '<span style="font-size:12px;color:var(--text-dim);">正在获取二维码…</span></div>';
-      if (!document.getElementById('qrSpinStyle')) {
-        var s = document.createElement('style');
-        s.id = 'qrSpinStyle';
-        s.textContent = '@keyframes qrSpin { to { transform: rotate(360deg); } }';
-        document.head.appendChild(s);
-      }
-    }
-
-    function showError(msg) {
-      qrContainer.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:4px;padding:8px;">' +
-        '<span style="font-size:32px;">📱</span>' +
-        '<span style="font-size:12px;color:var(--text-muted);text-align:center;line-height:1.5;">' + msg + '</span>' +
-        '<span style="font-size:11px;color:var(--text-dim);text-align:center;">请使用下方手机号+验证码登录</span>' +
-        '<button class="mod-btn" style="padding:3px 12px;font-size:11px;margin-top:4px;" onclick="fetchWeChatQR()">重试</button></div>';
-    }
-
-    showLoading();
-
-    // 真实 API 端点（如果有后端服务就去请求）
-    var servers = [
-      'https://api.juzi.cool/api/auth/wechat/qr',
-      'https://juzi-auth.vercel.app/api/wechat-qr'
-    ];
-
-    function tryServer(idx) {
-      if (idx >= servers.length) {
-        showError('微信扫码暂时不可用');
-        return;
-      }
-      fetch(servers[idx], {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' },
-        signal: AbortSignal.timeout(6000)
-      }).then(function(r) { return r.json(); }).then(function(data) {
-        if (data && data.qr_url) {
-          renderQRCode(data.qr_url, data.scene_id || '');
-        } else {
-          throw new Error('no qr_url');
-        }
-      }).catch(function() {
-        tryServer(idx + 1);
-      });
-    }
-    tryServer(0);
-  }
-
-  function renderQRCode(qrUrl, sceneId) {
-    var qrContainer = document.getElementById('wechatQRCode');
-    if (!qrContainer) return;
-
-    // 显示二维码图片
-    qrContainer.innerHTML = '';
-    var img = document.createElement('img');
-    img.src = qrUrl;
-    img.style.cssText = 'width:180px;height:180px;border-radius:8px;';
-    img.alt = '微信扫码登录';
-    img.onerror = function() {
-      // 图片加载失败，显示文字登录引导
-      showManualLoginGuide();
-    };
-    qrContainer.appendChild(img);
-
-    // 状态提示
-    var statusEl = document.getElementById('wechatQRStatus');
-    if (statusEl) statusEl.textContent = '⏳ 请用微信扫描二维码';
-
-    if (sceneId) {
-      startPollingScan(sceneId);
-    }
-  }
-
-  function startPollingScan(sceneId) {
-    stopWeChatQRPoll();
-    wechatQRRetryCount = 0;
-
-    function poll() {
-      wechatQRRetryCount++;
-      var servers = [
-        'https://api.juzi.cool/api/auth/wechat/check?scene_id=' + encodeURIComponent(sceneId),
-        'https://juzi-auth.vercel.app/api/wechat-check?scene_id=' + encodeURIComponent(sceneId)
-      ];
-
-      function tryServer(idx) {
-        if (idx >= servers.length) {
-          // 服务器都不通，继续轮询
-          if (wechatQRRetryCount < WECHAT_QR_MAX_RETRIES) {
-            wechatQRTimer = setTimeout(poll, 3000);
-          }
-          return;
-        }
-        fetch(servers[idx], {
-          method: 'GET',
-          headers: { 'Accept': 'application/json' },
-          signal: AbortSignal.timeout(5000)
-        }).then(function(r) { return r.json(); }).then(function(data) {
-          var statusEl = document.getElementById('wechatQRStatus');
-          if (data.status === 'scanned') {
-            if (statusEl) statusEl.textContent = '✅ 已扫码，请在手机上确认';
-          }
-          if (data.status === 'confirmed' && data.user) {
-            handleWeChatLogin(data.user);
-            return;
-          }
-          if (data.status === 'expired') {
-            showQRExpired();
-            return;
-          }
-          if (wechatQRRetryCount < WECHAT_QR_MAX_RETRIES) {
-            wechatQRTimer = setTimeout(poll, 3000);
-          } else {
-            showQRExpired();
-          }
-        }).catch(function() {
-          tryServer(idx + 1);
-        });
-      }
-      tryServer(0);
-    }
-
-    wechatQRTimer = setTimeout(poll, 3000);
-  }
-
-  function showQRExpired() {
-    var qrContainer = document.getElementById('wechatQRCode');
-    if (!qrContainer) return;
-    qrContainer.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:8px;">' +
-      '<span style="font-size:36px;">⏰</span>' +
-      '<span style="font-size:13px;color:var(--text-muted);">二维码已过期</span>' +
-      '<button class="mod-btn" style="padding:4px 16px;font-size:12px;" onclick="fetchWeChatQR()">刷新二维码</button></div>';
-  }
-
-  function showManualLoginGuide() {
-    var qrContainer = document.getElementById('wechatQRCode');
-    if (!qrContainer) return;
-    qrContainer.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:180px;gap:4px;padding:8px;">' +
-      '<span style="font-size:32px;">📱</span>' +
-      '<span style="font-size:12px;color:var(--text-muted);text-align:center;line-height:1.5;">微信扫码暂时不可用</span>' +
-      '<span style="font-size:11px;color:var(--text-dim);text-align:center;">请使用下方手机号+验证码登录</span></div>';
-  }
-
-  function handleWeChatLogin(userData) {
-    stopWeChatQRPoll();
-    var key = userData.phone || userData.openid || ('wx_' + Date.now().toString(36));
-    var users = getAllUsers();
-    if (!users[key]) {
-      users[key] = {
-        nickname: userData.nickname || ('桔友' + (userData.phone || '').slice(-4) || '微信用户'),
-        phone: userData.phone || '',
-        avatar: userData.avatar || '',
-        fromWeChat: true,
-        created: new Date().toISOString()
-      };
-      saveAllUsers(users);
-    }
-    saveCurrentUser(users[key]);
-    updateAccountUI();
-    closeAccount();
-    showToast('🎉 微信登录成功！');
-  }
-
-  // ── 手机号验证码登录 ──
-  function sendSmsCode() {
-    var phone = document.getElementById('authPhone').value.trim();
-    var errorEl = document.getElementById('authPhoneError');
-
-    if (!phone || !/^1\d{10}$/.test(phone)) {
-      errorEl.textContent = '请输入正确的11位手机号';
-      document.getElementById('authPhone').focus();
-      return;
-    }
-    errorEl.textContent = '';
-
-    var btn = document.getElementById('sendCodeBtn');
-    btn.disabled = true;
-    var countdown = 60;
-    btn.textContent = countdown + 's';
-
-    // 尝试通过真实 API 发送验证码
-    var servers = [
-      'https://api.juzi.cool/api/auth/sms/send',
-      'https://juzi-auth.vercel.app/api/send-sms'
-    ];
-
-    function tryServer(idx) {
-      if (idx >= servers.length) {
-        // 所有服务都失败，用本地演示模式
-        console.log('[SMS] All servers failed, using local fallback');
-        return;
-      }
-      fetch(servers[idx], {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: phone }),
-        signal: AbortSignal.timeout(8000)
-      }).then(function(r) { return r.json(); }).then(function(data) {
-        if (data && data.success) {
-          showToast('📱 验证码已发送到 ' + phone.slice(0,3) + '****' + phone.slice(7));
-        }
-      }).catch(function() {
-        tryServer(idx + 1);
-      });
-    }
-    tryServer(0);
-
-    // 本地生成验证码（用于演示/兜底）
-    var code = String(Math.floor(100000 + Math.random() * 900000));
-    codeTimers[phone] = code;
-    console.log('[验证码] ' + phone + ' → ' + code);
-
-    // 验证码倒计时
-    var timer = setInterval(function() {
-      countdown--;
-      btn.textContent = countdown + 's';
-      if (countdown <= 0) {
-        clearInterval(timer);
-        btn.disabled = false;
-        btn.textContent = '重新发送';
-        delete codeTimers[phone];
-      }
-    }, 1000);
-
-    // 演示模式：自动填入验证码（生产环境需要去掉）
-    var codeInput = document.getElementById('authCode');
-    codeInput.value = code;
-    codeInput.disabled = false;
-    var hintEl = document.getElementById('codeSendHint');
-    hintEl.textContent = '验证码：' + code;
-    hintEl.style.display = 'block';
-  }
-
-  function loginByPhone() {
-    var phone = document.getElementById('authPhone').value.trim();
-    var code = document.getElementById('authCode').value.trim();
-    var nickname = document.getElementById('authNickname').value.trim();
-    var phoneError = document.getElementById('authPhoneError');
-    var codeError = document.getElementById('authCodeError');
-
-    phoneError.textContent = '';
-    codeError.textContent = '';
-
-    if (!phone || !/^1\d{10}$/.test(phone)) {
-      phoneError.textContent = '请输入正确的11位手机号';
-      return;
-    }
-    if (!code || code.length !== 6) {
-      codeError.textContent = '请输入6位验证码';
-      return;
-    }
-
-    // 验证码本地校验
-    if (codeTimers[phone] && code !== codeTimers[phone]) {
-      codeError.textContent = '验证码错误，请重新输入';
-      return;
-    }
-    if (!codeTimers[phone]) {
-      codeError.textContent = '验证码已过期或未发送，请重新获取';
-      return;
-    }
-
-    // 首次注册时显示昵称输入
-    var users = getAllUsers();
-    if (!users[phone] && !nickname) {
-      document.getElementById('authNicknameRow').style.display = 'flex';
-      document.getElementById('authNickname').focus();
-      phoneError.textContent = '请输入昵称完成注册';
-      return;
-    }
-
-    // 登录/注册成功
-    if (!users[phone]) {
-      users[phone] = {
-        nickname: nickname || '桔友' + phone.slice(-4),
-        phone: phone,
-        created: new Date().toISOString()
-      };
-      saveAllUsers(users);
-    } else if (nickname) {
-      // 允许更新昵称
-      users[phone].nickname = nickname;
-      saveAllUsers(users);
-    }
-    saveCurrentUser(users[phone]);
-    delete codeTimers[phone];
-    updateAccountUI();
-    closeAccount();
-    showToast('🍊 欢迎回来，' + (users[phone].nickname || '桔友') + '！');
-  }
-
-  function logoutAccount() {
-    if (!confirm('确定退出登录？你的发帖和回复会保留。')) return;
-    localStorage.removeItem(ACCT_KEY);
-    updateAccountUI();
-    closeAccount();
-    showToast('已退出登录');
-  }
-
-  // 页面加载时初始化
-  (function initAccount() {
-    updateAccountUI();
-  })();
+  // ═══════════════ 账号系统已移除 (v9.52) ═══════════════
 
 </script>
-<!-- ═══════════ ACCOUNT MODAL ═══════════ -->
-<div class="modal-overlay" id="accountOverlay" onclick="if(event.target===this)closeAccount()">
-  <div class="modal-box" style="max-width:440px;">
-    <div id="accountLoginView">
-      <h2>
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-        登录桔子
-        <span class="modal-hint">登录后可发帖、评论、点赞</span>
-      </h2>
-
-      <!-- WeChat QR Login -->
-      <div class="mod-section">
-        <div class="mod-section-title">微信扫码登录</div>
-        <div style="text-align:center;padding:16px 0;">
-          <div id="wechatQRCode" style="width:180px;height:180px;margin:0 auto 8px;background:#f5f5f5;border-radius:8px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);overflow:hidden;">
-            <span style="color:var(--text-dim);font-size:13px;">加载二维码…</span>
-          </div>
-          <p style="font-size:13px;color:var(--text-muted);" id="wechatQRStatus">打开微信扫一扫，快速登录</p>
-        </div>
-      </div>
-
-      <div style="text-align:center;color:var(--text-dim);font-size:12px;margin:-8px 0 16px;">— 或 —</div>
-
-      <!-- Phone Login/Register -->
-      <div class="mod-section">
-        <div class="mod-section-title">手机号验证码登录</div>
-        <div class="mod-row">
-          <label>手机号</label>
-          <input type="tel" id="authPhone" placeholder="请输入手机号" maxlength="11" style="flex:1;" oninput="document.getElementById('authPhoneError').textContent=''">
-        </div>
-        <div style="font-size:11px;color:#e55;margin:-4px 0 8px 78px;min-height:16px;" id="authPhoneError"></div>
-        <div class="mod-row">
-          <label>验证码</label>
-          <input type="text" id="authCode" placeholder="请输入6位验证码" maxlength="6" style="flex:1;min-width:100px;" oninput="document.getElementById('authCodeError').textContent=''">
-          <button class="mod-btn" id="sendCodeBtn" onclick="sendSmsCode()" style="padding:7px 14px;font-size:13px;white-space:nowrap;flex-shrink:0;">发送验证码</button>
-        </div>
-        <div style="font-size:11px;color:#e55;margin:-4px 0 8px 78px;min-height:16px;" id="authCodeError"></div>
-        <div class="mod-row" id="authNicknameRow" style="display:none;">
-          <label>昵称</label>
-          <input type="text" id="authNickname" placeholder="给自己起个昵称吧" maxlength="20" style="flex:1;">
-        </div>
-        <div style="font-size:11px;color:var(--accent);margin:4px 0 0 78px;min-height:16px;display:none;" id="codeSendHint"></div>
-      </div>
-
-      <div class="mod-actions">
-        <button class="mod-btn" onclick="closeAccount()">取消</button>
-        <button class="mod-btn primary" onclick="loginByPhone()">登录 / 注册</button>
-      </div>
-    </div>
-
-    <div id="accountProfileView" style="display:none;">
-      <h2>
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-          <circle cx="12" cy="7" r="4"/>
-        </svg>
-        我的账号
-      </h2>
-      <div class="mod-section">
-        <div style="text-align:center;padding:12px 0;">
-          <div style="width:64px;height:64px;border-radius:50%;background:var(--accent-dim);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;font-weight:600;" id="profileAvatar">J</div>
-          <div style="font-size:16px;font-weight:600;" id="profileName">用户</div>
-          <div style="font-size:13px;color:var(--text-muted);margin-top:4px;" id="profilePhone"></div>
-          <div style="font-size:11px;color:var(--text-dim);margin-top:2px;" id="profileCreated"></div>
-        </div>
-      </div>
-      <div class="mod-actions">
-        <button class="mod-btn danger" onclick="logoutAccount()">退出登录</button>
-        <button class="mod-btn" onclick="closeAccount()">关闭</button>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- ═══════════ SETTINGS MODAL ═══════════ -->
 <div class="modal-overlay" id="settingsOverlay" onclick="if(event.target===this)closeSettings()">
   <div class="modal-box">
