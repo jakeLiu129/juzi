@@ -603,7 +603,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px 40px;
+    padding: 16px 60px;
     background: none;
     border: none;
     cursor: pointer;
@@ -645,12 +645,12 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease, padding 0.3s ease;
-    padding: 0 40px;
+    padding: 0 60px;
   }
 
   .trial-chapter.open .trial-chapter-body {
     max-height: 8000px;
-    padding: 0 40px 20px;
+    padding: 0 60px 20px;
   }
 
   .trial-chapter-body p {
@@ -1098,7 +1098,7 @@
         <a href="https://www.canva.com" class="site" target="_blank" rel="noopener"><img data-domain="www.canva.com" class="site-icon" alt="Canva" width="16" height="16">Canva</a>
         <a href="https://www.figma.com" class="site" target="_blank" rel="noopener"><img data-domain="figma.com" class="site-icon" alt="Figma" width="16" height="16">Figma</a>
         <a href="https://excalidraw.com" class="site" target="_blank" rel="noopener"><img data-domain="excalidraw.com" class="site-icon" alt="Excalidraw" width="16" height="16">Excalidraw</a>
-        <a href="https://www.tldraw.com" class="site" target="_blank" rel="noopener"><img data-domain="www.tldraw.com" class="site-icon" alt="tldraw" width="16" height="16">tldraw</a>
+        <a href="https://www.tldraw.com" class="site" target="_blank" rel="noopener"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231a1a1a'/%3E%3Cpath d='M18.14 10.04c0 .77-.26 1.43-.79 1.97-.53.54-1.17.8-1.93.8-.78 0-1.44-.26-1.97-.8a2.66 2.66 0 01-.79-1.97c0-.77.26-1.43.79-1.97.53-.54 1.19-.8 1.97-.8.76 0 1.4.26 1.93.8a2.7 2.7 0 01.79 1.97zm-5.52 9.73c0-.77.27-1.43.8-1.97a2.57 2.57 0 012-.84c.73 0 1.37.28 1.93.84.55.54.87 1.15.96 1.83.19 1.27-.04 2.52-.69 3.76-.62 1.24-1.51 2.2-2.69 2.85-.64.37-1.17.36-1.58-.03a.97.97 0 01.34-1.34c.35-.26.63-.58.86-.98.23-.4.38-.81.45-1.23.02-.19-.06-.29-.24-.29-.46-.02-.93-.28-1.42-.77-.48-.5-.72-1.1-.72-1.83z' fill='white'/%3E%3C/svg%3E" class="site-icon" alt="tldraw" width="16" height="16" data-skip-favicon="1">tldraw</a>
         <a href="https://linear.app" class="site" target="_blank" rel="noopener"><img data-domain="linear.app" class="site-icon" alt="Linear" width="16" height="16">Linear</a>
       </div>
     </div>
@@ -1159,9 +1159,9 @@
         </div>
         <div id="paySection" style="display:none;margin-top:16px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;">
-            <p style="font-size:15px;color:#333;margin-bottom:16px;">📖 请扫码支付 <strong style="color:var(--accent);">¥9.90</strong>,付款成功后请点击付款码,即可跳转到电子书下载地址</p>
+            <p style="font-size:15px;color:#333;margin-bottom:16px;">📖 请扫码支付 <strong style="color:var(--accent);">¥1.99</strong>,付款成功后请点击付款码,即可跳转到电子书下载地址</p>
             <div id="payQRContainer">
-              <img src="wechat-pay.jpg" alt="微信收款码" id="wechatPayImg" style="width:220px;height:auto;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer;transition:opacity 0.3s,transform 0.1s;">
+              <img src="1.99收款码.jpg" alt="微信收款码" id="wechatPayImg" style="width:220px;height:auto;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer;transition:opacity 0.3s,transform 0.1s;">
               <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">付款成功后,点击上面的付款码即可跳转 🍊</p>
               <p style="font-size:11px;color:var(--text-muted);margin-top:6px;" id="attemptHint"></p>
             </div>
@@ -1509,7 +1509,7 @@
   // ── 网站图标自动加载 (直接域名 Favicon → DuckDuckGo → Google → 首字母文字图标) ──
   document.querySelectorAll('.site-icon[data-domain]').forEach(function(img) {
     var domain = img.getAttribute('data-domain');
-    if (!domain) return;
+    if (!domain || img.getAttribute('data-skip-favicon')) return;
     var name = img.getAttribute('alt') || domain.split('.')[0] || '?';
     var attempts = 0;
 
@@ -1806,6 +1806,12 @@
         img.width = 16;
         img.height = 16;
 
+        // tldraw 使用内联 SVG 图标(黑色logo,白色背景上不可见)
+        if (site.domain === 'www.tldraw.com') {
+          img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231a1a1a'/%3E%3Cpath d='M18.14 10.04c0 .77-.26 1.43-.79 1.97-.53.54-1.17.8-1.93.8-.78 0-1.44-.26-1.97-.8a2.66 2.66 0 01-.79-1.97c0-.77.26-1.43.79-1.97.53-.54 1.19-.8 1.97-.8.76 0 1.4.26 1.93.8a2.7 2.7 0 01.79 1.97zm-5.52 9.73c0-.77.27-1.43.8-1.97a2.57 2.57 0 012-.84c.73 0 1.37.28 1.93.84.55.54.87 1.15.96 1.83.19 1.27-.04 2.52-.69 3.76-.62 1.24-1.51 2.2-2.69 2.85-.64.37-1.17.36-1.58-.03a.97.97 0 01.34-1.34c.35-.26.63-.58.86-.98.23-.4.38-.81.45-1.23.02-.19-.06-.29-.24-.29-.46-.02-.93-.28-1.42-.77-.48-.5-.72-1.1-.72-1.83z' fill='white'/%3E%3C/svg%3E";
+          img.setAttribute('data-skip-favicon', '1');
+        }
+
         a.appendChild(img);
         a.appendChild(document.createTextNode(site.name));
         container.appendChild(a);
@@ -1814,7 +1820,7 @@
       // Re-run icon loading for this section
       container.querySelectorAll('.site-icon[data-domain]').forEach(function(img) {
         var domain = img.getAttribute('data-domain');
-        if (!domain) return;
+        if (!domain || img.getAttribute('data-skip-favicon')) return;
         var name = img.getAttribute('alt') || domain.split('.')[0] || '?';
         var attempts = 0;
 
