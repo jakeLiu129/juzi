@@ -1041,13 +1041,11 @@
         </div>
         <div id="paySection" style="display:none;margin-top:16px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;">
-            <p style="font-size:15px;color:#333;margin-bottom:16px;">📖 请扫码支付 <strong style="color:var(--accent);">¥9.90</strong>，付款成功后将自动获取下载链接</p>
+            <p style="font-size:15px;color:#333;margin-bottom:16px;">📖 请扫码支付 <strong style="color:var(--accent);">¥9.90</strong>，付款成功后请点击付款码，即可跳转到电子书下载地址</p>
             <div id="payQRContainer">
-              <img src="wechat-pay.jpg" alt="微信收款码" id="wechatPayImg" style="width:220px;height:auto;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer;transition:opacity 0.3s;">
-              <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">请扫码付款，付款后点击收款码 🍊</p>
-            </div>
-            <div id="afterPayContainer" style="display:none;">
-              <p style="font-size:18px;color:var(--accent);margin-bottom:16px;cursor:pointer;font-weight:700;padding:16px 24px;background:var(--accent-light);border-radius:var(--radius);border:1px solid var(--accent-dim);display:inline-block;" id="getDownloadLinkBtn">✅ 我已付款，点击获取下载链接</p>
+              <img src="wechat-pay.jpg" alt="微信收款码" id="wechatPayImg" style="width:220px;height:auto;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer;transition:opacity 0.3s,transform 0.1s;">
+              <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">付款成功后，点击上面的付款码即可跳转 🍊</p>
+              <p style="font-size:11px;color:var(--text-muted);margin-top:6px;" id="attemptHint"></p>
             </div>
             <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--radius);padding:24px;display:none;" id="downloadLinkSection">
               <p style="font-size:15px;color:#333;margin-bottom:16px;">🎉 已收到，请到百度网盘下载《少，就是多》PDF电子书：</p>
@@ -1422,50 +1420,76 @@
     }, 2500);
   }
 
-  // ── 下载付费流程（v9.43 新版）──
+  // ── 下载付费流程（v9.49）──
   var downloadBtn = document.getElementById('downloadBtn');
   var paySection = document.getElementById('paySection');
   var payQRContainer = document.getElementById('payQRContainer');
-  var afterPayContainer = document.getElementById('afterPayContainer');
   var downloadLinkSection = document.getElementById('downloadLinkSection');
   var bookActionsArea = document.getElementById('bookActionsArea');
   var wechatPayImg = document.getElementById('wechatPayImg');
-  var getDownloadLinkBtn = document.getElementById('getDownloadLinkBtn');
-  var payFlowTimer = null;
+  var attemptHint = document.getElementById('attemptHint');
+  var attemptCount = 0;
+  var payAttemptTimer = null;
+
+  // 随机成功阈值：第几次点击之后允许成功（2-6次随机）
+  var successThreshold = 2 + Math.floor(Math.random() * 5);
 
   if (downloadBtn) {
     downloadBtn.addEventListener('click', function() {
       bookActionsArea.style.display = 'none';
       paySection.style.display = 'block';
       payQRContainer.style.display = 'block';
-      afterPayContainer.style.display = 'none';
       downloadLinkSection.style.display = 'none';
-      clearTimeout(payFlowTimer);
+      attemptCount = 0;
+      successThreshold = 2 + Math.floor(Math.random() * 5);
+      wechatPayImg.style.opacity = '1';
+      wechatPayImg.style.cursor = 'pointer';
+      if (attemptHint) attemptHint.textContent = '';
+      clearTimeout(payAttemptTimer);
     });
   }
 
-  // 点击微信收款码 → 模拟付款成功，收款码下面增加"已付款，点击获取下载链接"
+  // 点击微信收款码 → 尝试验证付款，可能失败需要重试
   if (wechatPayImg) {
     wechatPayImg.addEventListener('click', function() {
-      // 收款码变暗表示已付款
-      wechatPayImg.style.opacity = '0.5';
-      wechatPayImg.style.cursor = 'default';
-      // 2秒后显示"已付款，点击获取下载链接"
-      payFlowTimer = setTimeout(function() {
-        payQRContainer.style.display = 'none';
-        afterPayContainer.style.display = 'block';
-      }, 2000);
-    });
-  }
+      attemptCount++;
 
-  // 点击"我已付款，点击获取下载链接" → 显示百度网盘信息，3秒后跳转
-  if (getDownloadLinkBtn) {
-    getDownloadLinkBtn.addEventListener('click', function() {
-      downloadLinkSection.style.display = 'block';
-      // 3秒后跳转到百度网盘
-      setTimeout(function() {
-        window.open('https://pan.baidu.com/s/1vpzDcaD21RPXou-0s2VF9Q', '_blank');
-      }, 3000);
+      if (attemptCount >= successThreshold) {
+        // 付款验证成功！
+        wechatPayImg.style.opacity = '0.4';
+        wechatPayImg.style.cursor = 'default';
+        wechatPayImg.style.pointerEvents = 'none';
+        if (attemptHint) {
+          attemptHint.textContent = '✅ 付款验证成功！正在跳转到下载地址…';
+          attemptHint.style.color = '#07c160';
+        }
+
+        // 显示下载链接
+        downloadLinkSection.style.display = 'block';
+
+        // 1.5秒后跳转到百度网盘
+        payAttemptTimer = setTimeout(function() {
+          window.open('https://pan.baidu.com/s/1vpzDcaD21RPXou-0s2VF9Q', '_blank');
+        }, 1500);
+      } else {
+        // 付款验证未通过，提示重试
+        wechatPayImg.style.transform = 'scale(0.95)';
+        setTimeout(function() { wechatPayImg.style.transform = 'scale(1)'; }, 150);
+
+        var remaining = successThreshold - attemptCount;
+        var messages = [
+          '😅 还没检测到付款，请确认已扫码支付后再点击付款码试试',
+          '🤔 请完成扫码支付后再点击付款码验证哦',
+          '💡 付款完成了吗？再试试点击付款码验证~',
+          '🍊 再试一次！付款成功后点击付款码即可',
+          '⏳ 就差一点点，请确认支付完成后再点付款码'
+        ];
+        var msgIdx = Math.min(attemptCount - 1, messages.length - 1);
+        if (attemptHint) {
+          attemptHint.textContent = messages[msgIdx];
+          attemptHint.style.color = '#e8853a';
+        }
+      }
     });
   }
 
