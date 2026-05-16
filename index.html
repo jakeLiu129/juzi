@@ -51,7 +51,7 @@
     justify-content: flex-start;
     gap: 16px;
     padding: 20px 0 54px;
-    padding-left: 20%;
+    padding-left: 1em;
     box-sizing: border-box;
   }
 
@@ -103,10 +103,12 @@
     border-left: none;
     border-right: none;
     letter-spacing: 0.04em;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
+    font-weight: 700;
   }
 
   .nav-tab:hover { color: var(--text); }
-  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .nav-tab.active { color: #1a1a1a; font-weight: 900; font-size: 18px; font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif; border-bottom-color: #1a1a1a; }
 
   /* ── Page Container ── */
   .container {
@@ -147,8 +149,8 @@
   }
 
   .nav-page .search-wrap:focus-within {
-    border-color: var(--accent-dim);
-    box-shadow: 0 0 0 3px var(--accent-light);
+    border-color: #333;
+    box-shadow: 0 0 0 3px #f0f0f0;
   }
 
   /* Engine Selector */
@@ -300,16 +302,17 @@
     justify-content: center;
     gap: 6px;
     padding: 10px 18px;
-    background: var(--accent);
+    background: #1a1a1a;
     color: #fff;
     border: none;
     cursor: pointer;
     font-size: 14px;
+    border-radius: 0 var(--radius) var(--radius) 0;
     transition: background 0.2s;
   }
 
   .search-btn:hover {
-    background: #d4752f;
+    background: #333;
   }
 
   .nav-page .section {
@@ -317,10 +320,10 @@
   }
 
   .nav-page .section-title {
-    font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'SimHei', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent);
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: #1a1a1a;
     letter-spacing: 0.06em;
     display: inline-flex;
     align-items: center;
@@ -490,11 +493,12 @@
 
   .study-page .section-title {
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 900;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--accent-dim);
+    border-bottom: 2px solid #1a1a1a;
     letter-spacing: 0.04em;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
 
   .public-books {
@@ -887,7 +891,7 @@
     .product-grid { grid-template-columns: repeat(2, 1fr); }
     .book-featured { flex-direction: column; align-items: center; text-align: center; }
     .book-featured .book-actions { justify-content: center; }
-    .nav-banner { padding-left: 10%; padding-bottom: 36px; }
+    .nav-banner { padding-left: 0; padding-bottom: 36px; }
   }
 
   @media (max-width: 480px) {
@@ -896,7 +900,7 @@
     .nav-page .sites { grid-template-columns: repeat(2, 1fr); }
     .public-books { grid-template-columns: 1fr; }
     .product-grid { grid-template-columns: 1fr; }
-    .nav-banner { padding-left: 8px; padding-bottom: 24px; }
+    .nav-banner { padding-left: 0; padding-bottom: 24px; }
   }
 </style>
 </head>
