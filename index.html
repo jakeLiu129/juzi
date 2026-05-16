@@ -59,13 +59,46 @@
     opacity: 0.8;
   }
 
+  /* ── Nav Banner (logo + slogan) ── */
+  .nav-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px 0 20px;
+  }
+
+  .nav-banner .banner-logo {
+    height: 48px;
+    width: auto;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .nav-banner .banner-logo:hover {
+    opacity: 0.8;
+  }
+
+  .nav-banner .banner-slogan {
+    font-family: 'Juzi Serif', 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Nav wrap ── */
+  .main-nav-wrap {
+    border-bottom: 1px solid var(--border);
+  }
+
   /* ── Nav tabs ── */
   .main-nav {
     display: flex;
     justify-content: center;
     gap: 40px;
     margin-bottom: 0;
-    border-bottom: 1px solid var(--border);
     padding-bottom: 0;
   }
 
@@ -106,36 +139,6 @@
   /* ═══════════ PAGE 1: 桔子导航 ═══════════ */
   .nav-page {
     padding: 40px 0 80px;
-  }
-
-  /* ── Nav Banner (logo + slogan) ── */
-  .nav-banner {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-    margin-bottom: 40px;
-    padding: 0 4px;
-  }
-
-  .nav-banner .banner-logo {
-    height: 48px;
-    width: auto;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-
-  .nav-banner .banner-logo:hover {
-    opacity: 0.8;
-  }
-
-  .nav-banner .banner-slogan {
-    font-family: 'Juzi Serif', 'Noto Serif SC', 'Songti SC', 'STSong', serif;
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--text-muted);
-    letter-spacing: 0.08em;
   }
 
   /* ── Search ── */
@@ -915,6 +918,14 @@
   <a href="#page-nav" onclick="switchTab('nav');return false">
     <img src="logo.png" alt="桔子" class="header-logo">
   </a>
+</div>
+
+<div class="nav-banner">
+  <img src="logo.png" alt="桔子" class="banner-logo">
+  <span class="banner-slogan">我们喜欢简单的生活！</span>
+</div>
+
+<div class="main-nav-wrap">
   <nav class="main-nav" id="mainNav">
     <button class="nav-tab active" data-page="nav">桔子导航</button>
     <button class="nav-tab" data-page="study">桔子书房</button>
@@ -925,10 +936,6 @@
 <!-- ═══════════ PAGE 1: 桔子导航 ═══════════ -->
 <section class="page active" id="page-nav">
   <div class="container nav-page">
-    <div class="nav-banner">
-      <img src="logo.png" alt="桔子" class="banner-logo">
-      <span class="banner-slogan">我们喜欢简单的生活！</span>
-    </div>
     <div class="search">
       <div class="search-wrap" id="searchWrap">
         <div class="search-engine-selector">
