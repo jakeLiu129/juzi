@@ -39,12 +39,20 @@
   }
 
   /* ── Nav Banner (logo + slogan, top-left) ── */
+  .nav-banner-wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
   .nav-banner {
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 16px;
-    padding: 20px 24px 16px;
+    padding: 20px 0 54px;
+    padding-left: 20%;
+    box-sizing: border-box;
   }
 
   .nav-banner .banner-logo {
@@ -879,6 +887,7 @@
     .product-grid { grid-template-columns: repeat(2, 1fr); }
     .book-featured { flex-direction: column; align-items: center; text-align: center; }
     .book-featured .book-actions { justify-content: center; }
+    .nav-banner { padding-left: 10%; padding-bottom: 36px; }
   }
 
   @media (max-width: 480px) {
@@ -887,17 +896,20 @@
     .nav-page .sites { grid-template-columns: repeat(2, 1fr); }
     .public-books { grid-template-columns: 1fr; }
     .product-grid { grid-template-columns: 1fr; }
+    .nav-banner { padding-left: 8px; padding-bottom: 24px; }
   }
 </style>
 </head>
 <body>
 
 <!-- ═══════════ HEADER ═══════════ -->
+<div class="nav-banner-wrap">
 <div class="nav-banner">
   <a href="#page-nav" onclick="switchTab('nav');return false">
     <img src="logo.png" alt="桔子" class="banner-logo">
   </a>
   <span class="banner-slogan">我们喜欢简单的生活！</span>
+</div>
 </div>
 
 <div class="main-nav-wrap">
