@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>桔子 · 极简生活</title>
-<meta name="description" content="桔子——简单好用的极简生活导航。桔子导航、社区、书房、好物，极简主义者的家。">
+<meta name="description" content="桔子——简单好用的极简生活导航。桔子导航、书房、好物，极简主义者的家。">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%23e8853a'/><circle cx='50' cy='50' r='28' fill='%23fafafa' opacity='0.3'/></svg>">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --bg: #faf8f5;
-    --bg-card: #fff;
+    --bg: #ffffff;
+    --bg-card: #ffffff;
     --text: #1a1a1a;
     --text-muted: #888;
     --text-dim: #bfb8b0;
@@ -156,6 +156,12 @@
     width: 14px;
     height: 14px;
     border-radius: 2px;
+    filter: saturate(0.5) opacity(0.78);
+    transition: filter 0.35s ease;
+  }
+
+  .search-engine-btn:hover .favicon {
+    filter: saturate(1) opacity(1);
   }
 
   .search-engine-btn .arrow {
@@ -221,6 +227,12 @@
     width: 16px;
     height: 16px;
     border-radius: 3px;
+    filter: saturate(0.5) opacity(0.78);
+    transition: filter 0.35s ease;
+  }
+
+  .engine-option:hover .favicon {
+    filter: saturate(1) opacity(1);
   }
 
   .engine-option .eo-label {
@@ -320,6 +332,7 @@
     background: var(--accent-light);
   }
 
+  /* ── 极简色彩：第三方图标默认 50% 饱和度，hover 唤醒品牌色 ── */
   .nav-page .site-icon {
     width: 16px;
     height: 16px;
@@ -327,11 +340,24 @@
     object-fit: contain;
     flex-shrink: 0;
     background: var(--bg-card);
+    filter: saturate(0.5) opacity(0.82);
+    transition: filter 0.35s ease;
+  }
+
+  .nav-page .site:hover .site-icon {
+    filter: saturate(1) opacity(1);
   }
 
   .nav-page .site-icon.fallback {
     vertical-align: middle;
     background: var(--accent) !important;
+    /* fallback 用 opacity 模拟淡彩效果 */
+    opacity: 0.55;
+    transition: opacity 0.35s ease;
+  }
+
+  .nav-page .site:hover .site-icon.fallback {
+    opacity: 1;
   }
 
   .site-icon.fallback {
@@ -346,25 +372,7 @@
     flex-shrink: 0;
   }
 
-  /* ═══════════ PAGE 2: 桔子论坛 ═══════════ */
-  .forum-page {
-    padding: 40px 0 80px;
-  }
-
-  .delete-btn {
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    cursor: pointer;
-    font-size: 12px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .delete-btn:hover { color: #e55; background: #fef2f2; }
-
-  /* ═══════════ PAGE 3: 桔子书房 ═══════════ */
+  /* ═══════════ PAGE 2: 桔子书房 ═══════════ */
   .study-page {
     padding: 40px 0 80px;
   }
@@ -648,6 +656,29 @@
 
   footer .sep { margin: 0 8px; }
 
+  /* ── Toast ── */
+  .toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: #333;
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   /* ── Settings Modal ── */
   .modal-overlay {
     display: none;
@@ -827,552 +858,6 @@
   }
 
   /* ── Responsive ── */
-  /* ═══════════ FORUM COMMUNITY ═══════════ */
-  .community-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .community-header h2 {
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  .community-header .subtitle {
-    font-size: 13px;
-    color: var(--text-muted);
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 10px 22px;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none;
-    font-family: inherit;
-  }
-
-  .btn-primary:hover { background: #d4752f; }
-
-  .btn-outline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    background: transparent;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    border-radius: var(--radius);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    font-family: inherit;
-  }
-
-  .btn-outline:hover { background: var(--accent-light); }
-
-  .btn-sm {
-    padding: 6px 14px;
-    font-size: 12px;
-  }
-
-  /* Topic list */
-  .topic-list { display: flex; flex-direction: column; gap: 12px; }
-  
-  .topic-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    transition: box-shadow 0.2s;
-    cursor: pointer;
-  }
-
-  .topic-card:hover {
-    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-    border-color: var(--accent-dim);
-  }
-
-  .topic-card .tc-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .topic-card .tc-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 6px;
-    line-height: 1.4;
-  }
-
-  .topic-card .tc-title:hover { color: var(--accent); }
-
-  .topic-card .tc-body {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .topic-card .tc-meta {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    font-size: 12px;
-    color: var(--text-muted);
-    flex-wrap: wrap;
-  }
-
-  .topic-card .tc-meta .tc-author {
-    font-weight: 500;
-    color: var(--accent);
-    font-size: 12px;
-  }
-
-  .topic-card .tc-meta .tc-tag {
-    padding: 2px 8px;
-    background: var(--accent-light);
-    color: var(--accent);
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 500;
-  }
-
-  .tc-action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-dim);
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    transition: all 0.2s;
-    font-family: inherit;
-  }
-
-  .tc-action-btn:hover { color: var(--accent); background: var(--accent-light); }
-  .tc-action-btn.liked { color: #e74c3c; }
-  .tc-action-btn.liked:hover { background: #fef2f2; }
-
-  .tc-action-btn svg { width: 14px; height: 14px; }
-
-  .topic-pinned .topic-card {
-    border-left: 3px solid var(--accent);
-  }
-
-  /* Topic Detail */
-  .topic-detail {}
-
-  .topic-detail .td-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    color: var(--text-muted);
-    cursor: pointer;
-    margin-bottom: 16px;
-    padding: 4px 8px;
-    border: none;
-    background: none;
-    font-family: inherit;
-    transition: color 0.2s;
-  }
-
-  .topic-detail .td-back:hover { color: var(--accent); }
-
-  .td-main {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-    margin-bottom: 20px;
-  }
-
-  .td-main .td-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .td-main .td-meta {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .td-main .td-meta .td-author {
-    font-weight: 500;
-    color: var(--accent);
-  }
-
-  .td-main .td-content {
-    font-size: 15px;
-    color: #444;
-    line-height: 1.8;
-    white-space: pre-wrap;
-  }
-
-  .td-main .td-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-  }
-
-  .td-action-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 14px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: var(--bg-card);
-    color: #666;
-    cursor: pointer;
-    font-size: 13px;
-    transition: all 0.2s;
-    font-family: inherit;
-  }
-
-  .td-action-btn:hover { border-color: var(--accent-dim); color: var(--accent); }
-  .td-action-btn.liked { color: #e74c3c; border-color: #f5c6cb; background: #fef2f2; }
-  .td-action-btn .count { margin-left: 2px; font-weight: 500; }
-
-  /* Reply section */
-  .reply-section { margin-top: 20px; }
-
-  .reply-section .rs-title {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 16px;
-  }
-
-  .reply-form {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 24px;
-  }
-
-  .reply-form textarea {
-    width: 100%;
-    min-height: 80px;
-    padding: 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    resize: vertical;
-    background: var(--bg-card);
-    color: var(--text);
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-
-  .reply-form textarea:focus { border-color: var(--accent-dim); }
-
-  .reply-form .rf-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .reply-form .rf-hint {
-    font-size: 12px;
-    color: var(--text-dim);
-  }
-
-  .reply-list { display: flex; flex-direction: column; gap: 12px; }
-
-  .reply-item {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    transition: box-shadow 0.2s;
-  }
-
-  .reply-item .ri-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
-  }
-
-  .reply-item .ri-author {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-  }
-
-  .reply-item .ri-time {
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  .reply-item .ri-body {
-    font-size: 14px;
-    color: #444;
-    line-height: 1.7;
-    margin-bottom: 8px;
-  }
-
-  .reply-item .ri-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .reply-item .ri-action-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    cursor: pointer;
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    transition: all 0.2s;
-    font-family: inherit;
-  }
-
-  .reply-item .ri-action-btn:hover { color: var(--accent); background: var(--accent-light); }
-  .reply-item .ri-action-btn.liked { color: #e74c3c; }
-  .reply-item .ri-action-btn.liked:hover { background: #fef2f2; }
-
-  .reply-item .ri-reply-to {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-bottom: 4px;
-    padding: 2px 8px;
-    background: var(--bg);
-    border-radius: 4px;
-    display: inline-block;
-  }
-
-  .reply-item .ri-reply-to .at {
-    color: var(--accent);
-    font-weight: 500;
-  }
-
-  /* Create post page */
-  .create-post {}
-
-  .create-post .cp-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    color: var(--text-muted);
-    cursor: pointer;
-    margin-bottom: 16px;
-    padding: 4px 8px;
-    border: none;
-    background: none;
-    font-family: inherit;
-  }
-
-  .create-post .cp-back:hover { color: var(--accent); }
-
-  .cp-form {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px;
-  }
-
-  .cp-form h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .cp-form .cp-subtitle {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-  }
-
-  .cp-form input,
-  .cp-form textarea,
-  .cp-form select {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    background: var(--bg);
-    color: var(--text);
-    margin-bottom: 16px;
-    transition: border-color 0.2s;
-  }
-
-  .cp-form input:focus,
-  .cp-form textarea:focus,
-  .cp-form select:focus {
-    border-color: var(--accent-dim);
-  }
-
-  .cp-form textarea {
-    min-height: 200px;
-    resize: vertical;
-  }
-
-  .cp-form select {
-    width: auto;
-    min-width: 160px;
-    cursor: pointer;
-  }
-
-  .cp-form .cp-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-
-  .cp-form .cp-char-count {
-    font-size: 12px;
-    color: var(--text-dim);
-    text-align: right;
-    margin-top: -12px;
-    margin-bottom: 16px;
-  }
-
-  /* Filter bar */
-  .forum-filter {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
-  .forum-filter .filter-tag {
-    padding: 5px 14px;
-    border-radius: 16px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    color: #555;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
-  }
-
-  .forum-filter .filter-tag:hover {
-    border-color: var(--accent-dim);
-    color: var(--accent);
-  }
-
-  .forum-filter .filter-tag.active {
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-  }
-
-  .forum-filter .filter-tag.active:hover {
-    background: #d4752f;
-  }
-
-  /* Share toast */
-  .toast {
-    position: fixed;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: #333;
-    color: #fff;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-size: 13px;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-dim);
-  }
-
-  .empty-state .es-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-  }
-
-  .empty-state p {
-    font-size: 14px;
-    margin-bottom: 20px;
-  }
-
-  /* Forbidden notice */
-  .forbidden-notice {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #b91c1c;
-    padding: 8px 14px;
-    border-radius: var(--radius);
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-
-  /* Pinned badge */
-  .pinned-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 2px 8px;
-    background: var(--accent-dim);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 600;
-    border-radius: 4px;
-  }
-
   @media (max-width: 768px) {
     .site-desc { display: none; }
     .main-nav { gap: 24px; }
@@ -1402,7 +887,6 @@
   </a>
   <nav class="main-nav" id="mainNav">
     <button class="nav-tab active" data-page="nav">桔子导航</button>
-    <button class="nav-tab" data-page="forum">桔子社区</button>
     <button class="nav-tab" data-page="study">桔子书房</button>
     <button class="nav-tab" data-page="shop">桔子好物</button>
   </nav>
@@ -1507,76 +991,7 @@
     </div>
   </section>
 
-<!-- ═══════════ PAGE 2: 桔子社区 (豆瓣式论坛) ═══════════ -->
-<section class="page" id="page-forum">
-  <div class="container forum-page" id="forumContainer">
-    <!-- View: Topic List -->
-    <div id="forumListView">
-      <div class="community-header">
-        <div>
-          <h2>桔子社区</h2>
-          <p class="subtitle">极简主义者的交流园地 · 发帖讨论 · 点赞互动 · 分享转发</p>
-        </div>
-        <button class="btn-primary" onclick="showCreatePost()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          发帖
-        </button>
-      </div>
-
-      <!-- Filter bar -->
-      <div class="forum-filter" id="forumFilter">
-        <button class="filter-tag active" data-filter="all" onclick="setForumFilter('all')">全部</button>
-        <button class="filter-tag" data-filter="minimalism" onclick="setForumFilter('minimalism')">极简生活</button>
-        <button class="filter-tag" data-filter="reading" onclick="setForumFilter('reading')">读书分享</button>
-        <button class="filter-tag" data-filter="health" onclick="setForumFilter('health')">健康自律</button>
-        <button class="filter-tag" data-filter="sharing" onclick="setForumFilter('sharing')">好物推荐</button>
-        <button class="filter-tag" data-filter="qa" onclick="setForumFilter('qa')">问答求助</button>
-      </div>
-
-      <div id="topicList">
-        <div class="empty-state">
-          <div class="es-icon">💬</div>
-          <p>还没有帖子，来做第一个发帖的人吧！</p>
-          <button class="btn-outline" onclick="showCreatePost()">发布第一个帖子</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- View: Topic Detail -->
-    <div id="forumDetailView" style="display:none;"></div>
-
-    <!-- View: Create Post -->
-    <div id="forumCreateView" style="display:none;">
-      <div class="create-post">
-        <button class="cp-back" onclick="hideCreatePost()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>
-          返回社区
-        </button>
-        <div class="cp-form">
-          <h2>发表新帖子</h2>
-          <p class="cp-subtitle">分享你的极简心得、读书笔记、生活感悟。禁止涉政涉黄内容。</p>
-          <div id="createForbiddenNotice" style="display:none;"></div>
-          <input type="text" id="postTitle" placeholder="输入帖子标题（最多80字）" maxlength="80">
-          <select id="postCategory">
-            <option value="minimalism">极简生活</option>
-            <option value="reading">读书分享</option>
-            <option value="health">健康自律</option>
-            <option value="sharing">好物推荐</option>
-            <option value="qa">问答求助</option>
-          </select>
-          <textarea id="postContent" placeholder="写下你想分享的内容..." maxlength="10000"></textarea>
-          <div class="cp-char-count"><span id="postCharCount">0</span>/10000</div>
-          <div class="cp-actions">
-            <button class="btn-outline" onclick="hideCreatePost()">取消</button>
-            <button class="btn-primary" onclick="submitPost()">发布帖子</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ PAGE 3: 桔子书房 ═══════════ -->
+<!-- ═══════════ PAGE 2: 桔子书房 ═══════════ -->
 <section class="page" id="page-study">
   <div class="container study-page">
     <!-- 主推图书 -->
@@ -1704,7 +1119,7 @@
     </div>
 </section>
 
-<!-- ═══════════ PAGE 4: 桔子好物 ═══════════ -->
+<!-- ═══════════ PAGE 3: 桔子好物 ═══════════ -->
 <section class="page" id="page-shop">
   <div class="container shop-page">
     <p class="shop-subtitle">少买一点，买好一点 · 精选我亲测过的好物 · 全部京东自营 ❤️</p>
@@ -1951,493 +1366,10 @@
     searchBtn.addEventListener('click', doSearch);
   }
 
-  // ═══════════════ 桔子社区 · 豆瓣式论坛 ═══════════════
-  // 数据键
-  var FORUM_TOPICS_KEY = 'juzi_forum_topics';
-  var FORUM_REPLIES_KEY = 'juzi_forum_replies_';
-  var FORUM_LIKES_KEY = 'juzi_forum_likes';
-
-  // 分类标签
-  var FORUM_CATEGORIES = {
-    all: '全部',
-    minimalism: '极简生活',
-    reading: '读书分享',
-    health: '健康自律',
-    sharing: '好物推荐',
-    qa: '问答求助'
-  };
-
-  // 增强敏感词过滤（涉政 + 涉黄）
-  var FORBIDDEN_WORDS = [
-    '习近平','习大大','习主席','习总','习近','毛泽东','毛泽东','毛主席','共产党','中共','六四','六•四','六-四',
-    '天安门事件','法轮功','江青','赵紫阳','胡锦涛','江泽民','温家宝','李克强','胡耀邦','华国锋',
-    '邓小平','政治改革','多党制','民主运动','西藏独立','新疆独立','台独','藏独','疆独',
-    '高干子弟','特权阶层','文革','十年动乱','反革命','颠覆国家','分裂国家',
-    '色情','黄片','A片','av',' pornography ','成人电影','成人视频','裸聊','裸照',
-    '赌博','嫖娼','卖淫','约炮','一夜情','招嫖','援交','SM','调教',
-    '迷药','催情','淫秽','裸体直播','三级片','毛片','黄色网站','情色',
-    '吸毒','冰毒','大麻','海洛因','摇头丸','k粉','毒品'
-  ];
-
-  // 正则敏感检测（更灵活）
-  var FORBIDDEN_PATTERNS = [
-    /[吸食贩][毒]/,
-    /[发制][票]*[快转]*[代开]/,
-    /[火拼][枪战]/
-  ];
-
-  function hasForbiddenContent(text) {
-    var lower = text.toLowerCase();
-    // 关键词完全/部分匹配
-    for (var i = 0; i < FORBIDDEN_WORDS.length; i++) {
-      if (lower.indexOf(FORBIDDEN_WORDS[i].toLowerCase()) !== -1) return true;
-    }
-    // 正则匹配
-    for (var j = 0; j < FORBIDDEN_PATTERNS.length; j++) {
-      if (FORBIDDEN_PATTERNS[j].test(text)) return true;
-    }
-    return false;
-  }
-
-  // ── 数据操作 ──
-  function loadTopics() {
-    try { return JSON.parse(localStorage.getItem(FORUM_TOPICS_KEY)) || []; }
-    catch(e) { return []; }
-  }
-
-  function saveTopics(topics) {
-    localStorage.setItem(FORUM_TOPICS_KEY, JSON.stringify(topics));
-  }
-
-  function loadReplies(topicId) {
-    try { return JSON.parse(localStorage.getItem(FORUM_REPLIES_KEY + topicId)) || []; }
-    catch(e) { return []; }
-  }
-
-  function saveReplies(topicId, replies) {
-    localStorage.setItem(FORUM_REPLIES_KEY + topicId, JSON.stringify(replies));
-  }
-
-  function loadLikes() {
-    try { return JSON.parse(localStorage.getItem(FORUM_LIKES_KEY)) || { topics: {}, replies: {} }; }
-    catch(e) { return { topics: {}, replies: {} }; }
-  }
-
-  function saveLikes(likes) {
-    localStorage.setItem(FORUM_LIKES_KEY, JSON.stringify(likes));
-  }
-
-  function toggleLike(type, id) {
-    var likes = loadLikes();
-    var currentUser = getCurrentUser();
-    if (!currentUser) {
-      alert('请先登录后再点赞');
-      return false;
-    }
-    var userId = currentUser.phone || currentUser.nickname || 'anon';
-    var bucket = type === 'topic' ? likes.topics : likes.replies;
-    if (!bucket[id]) bucket[id] = [];
-    var idx = bucket[id].indexOf(userId);
-    if (idx === -1) {
-      bucket[id].push(userId);
-    } else {
-      bucket[id].splice(idx, 1);
-    }
-    saveLikes(likes);
-    return idx === -1; // true = now liked, false = now unliked
-  }
-
-  function isLiked(type, id) {
-    var likes = loadLikes();
-    var currentUser = getCurrentUser();
-    if (!currentUser) return false;
-    var userId = currentUser.phone || currentUser.nickname || 'anon';
-    var bucket = type === 'topic' ? likes.topics : likes.replies;
-    return bucket[id] && bucket[id].indexOf(userId) !== -1;
-  }
-
-  function getLikeCount(type, id) {
-    var likes = loadLikes();
-    var bucket = type === 'topic' ? likes.topics : likes.replies;
-    return (bucket[id] || []).length;
-  }
-
-  function generateId() {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-  }
-
-  // ── 获取当前用户 ──
-  function getForumUser() {
-    var user = getCurrentUser();
-    if (user) return user.nickname || user.phone || '匿名桔友';
-    return '匿名桔友';
-  }
-
-  function requireLogin() {
-    var user = getCurrentUser();
-    if (!user) {
-      alert('请先登录后再操作');
-      openAccount();
-      return false;
-    }
-    return true;
-  }
-
-  // ── 渲染帖子列表 ──
-  var currentFilter = 'all';
-
-  function setForumFilter(filter) {
-    currentFilter = filter;
-    document.querySelectorAll('#forumFilter .filter-tag').forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.filter === filter);
-    });
-    renderTopicList();
-  }
-
-  function renderTopicList() {
-    var topics = loadTopics();
-    var container = document.getElementById('topicList');
-
-    // 排序：置顶 > 按时间倒序
-    topics.sort(function(a, b) {
-      if (a.pinned && !b.pinned) return -1;
-      if (!a.pinned && b.pinned) return 1;
-      return b.createdAt - a.createdAt;
-    });
-
-    // 筛选
-    var filtered = currentFilter === 'all' ? topics : topics.filter(function(t) { return t.category === currentFilter; });
-
-    if (filtered.length === 0) {
-      container.innerHTML = '<div class="empty-state"><div class="es-icon">📭</div><p>' +
-        (currentFilter === 'all' ? '还没有帖子，来做第一个发帖的人吧！' : '该分类还没有帖子') +
-        '</p><button class="btn-outline" onclick="showCreatePost()">发布帖子</button></div>';
-      return;
-    }
-
-    container.innerHTML = filtered.map(function(t) {
-      var replyCount = loadReplies(t.id).length;
-      var likeCount = getLikeCount('topic', t.id);
-      var liked = isLiked('topic', t.id);
-      var catLabel = FORUM_CATEGORIES[t.category] || t.category || '其他';
-      var pinHtml = t.pinned ? '<span class="pinned-badge">📌 置顶</span> ' : '';
-      return '<div class="topic-card' + (t.pinned ? ' topic-pinned' : '') + '" onclick="showTopicDetail(\'' + t.id + '\')">' +
-        '<div class="tc-header">' +
-        '<div style="flex:1;min-width:0;">' +
-        '<div class="tc-title">' + pinHtml + escHtml(t.title) + '</div>' +
-        '<div class="tc-body">' + escHtml((t.content || '').slice(0, 200)) + '</div>' +
-        '</div>' +
-        '</div>' +
-        '<div class="tc-meta">' +
-        '<span class="tc-author">' + escHtml(t.author) + '</span>' +
-        '<span class="tc-tag">' + escHtml(catLabel) + '</span>' +
-        '<span>' + formatTime(t.createdAt) + '</span>' +
-        '<span>' + replyCount + ' 回复</span>' +
-        '<button class="tc-action-btn' + (liked ? ' liked' : '') + '" onclick="event.stopPropagation();handleLike(\'topic\',\'' + t.id + '\')">' +
-        '<svg viewBox="0 0 24 24" fill="' + (liked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-        ' <span class="count">' + likeCount + '</span>' +
-        '</button>' +
-        '<button class="tc-action-btn" onclick="event.stopPropagation();shareTopic(\'' + t.id + '\',\'' + escHtml(t.title).replace(/'/g, "\\'") + '\')">' +
-        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> 转发' +
-        '</button>' +
-        '</div>' +
-        '</div>';
-    }).join('');
-  }
-
-  // ── 渲染帖子详情 ──
-  function showTopicDetail(topicId) {
-    var topics = loadTopics();
-    var topic = topics.find(function(t) { return t.id === topicId; });
-    if (!topic) { alert('帖子不存在或已被删除'); renderTopicList(); return; }
-
-    // 增加浏览量
-    topic.views = (topic.views || 0) + 1;
-    saveTopics(topics);
-
-    document.getElementById('forumListView').style.display = 'none';
-    document.getElementById('forumCreateView').style.display = 'none';
-    document.getElementById('forumDetailView').style.display = 'block';
-
-    var replies = loadReplies(topicId);
-    var likeCount = getLikeCount('topic', topicId);
-    var liked = isLiked('topic', topicId);
-    var catLabel = FORUM_CATEGORIES[topic.category] || topic.category || '其他';
-    var currentUser = getCurrentUser();
-
-    var html = '<button class="td-back" onclick="hideTopicDetail()">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><polyline points="15 18 9 12 15 6"/></svg>' +
-      '返回社区</button>' +
-      '<div class="td-main">' +
-      '<div class="td-title">' + escHtml(topic.title) + '</div>' +
-      '<div class="td-meta">' +
-      '<span class="td-author">' + escHtml(topic.author) + '</span>' +
-      '<span class="tc-tag">' + escHtml(catLabel) + '</span>' +
-      '<span>' + formatTime(topic.createdAt) + '</span>' +
-      '<span>' + (topic.views || 0) + ' 次浏览</span>' +
-      '</div>' +
-      '<div class="td-content">' + escHtml(topic.content || '') + '</div>' +
-      '<div class="td-actions">' +
-      '<button class="td-action-btn' + (liked ? ' liked' : '') + '" onclick="handleLike(\'topic\',\'' + topicId + '\');showTopicDetail(\'' + topicId + '\')">' +
-      '<svg viewBox="0 0 24 24" fill="' + (liked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-      ' 点赞 <span class="count">' + likeCount + '</span>' +
-      '</button>' +
-      '<button class="td-action-btn" onclick="shareTopic(\'' + topicId + '\',\'' + escHtml(topic.title).replace(/'/g, "\\'") + '\')">' +
-      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>' +
-      ' 转发' +
-      '</button>' +
-      (currentUser ? '<button class="td-action-btn" onclick="deleteTopic(\'' + topicId + '\')" style="color:var(--text-dim);border-color:transparent;">🗑 删除</button>' : '') +
-      '</div>' +
-      '</div>' +
-      '<div class="reply-section">' +
-      '<h3 class="rs-title">全部回复 (' + replies.length + ')</h3>' +
-      '<div class="reply-form">' +
-      '<div id="replyForbiddenNotice" style="display:none;"></div>' +
-      '<textarea id="replyInput" placeholder="写下你的回复..." maxlength="2000"></textarea>' +
-      '<div class="rf-footer">' +
-      '<span class="rf-hint">友善交流 · 禁止涉政涉黄</span>' +
-      '<div>' +
-      '<span style="font-size:12px;color:var(--text-dim);margin-right:8px;"><span id="replyCharCount">0</span>/2000</span>' +
-      '<button class="btn-primary btn-sm" onclick="submitReply(\'' + topicId + '\')">发表回复</button>' +
-      '</div>' +
-      '</div>' +
-      '</div>' +
-      '<div class="reply-list" id="replyList">' +
-      renderReplies(topicId, replies) +
-      '</div>' +
-      '</div>';
-
-    document.getElementById('forumDetailView').innerHTML = html;
-
-    // 回复字数统计
-    setTimeout(function() {
-      var ri = document.getElementById('replyInput');
-      if (ri) {
-        ri.addEventListener('input', function() {
-          document.getElementById('replyCharCount').textContent = this.value.length;
-        });
-      }
-    }, 50);
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function renderReplies(topicId, replies) {
-    if (!replies || replies.length === 0) {
-      return '<div class="empty-state" style="padding:30px 0;"><div class="es-icon">💭</div><p>暂无回复，来说两句吧</p></div>';
-    }
-    return replies.map(function(r) {
-      var rLiked = isLiked('reply', r.id);
-      var rLikes = getLikeCount('reply', r.id);
-      var replyToHtml = r.replyTo ? '<div class="ri-reply-to">回复 <span class="at">@' + escHtml(r.replyTo) + '</span></div>' : '';
-      var delBtn = '<button class="ri-action-btn" onclick="deleteReply(\'' + topicId + '\',\'' + r.id + '\')" style="color:var(--text-dim);">🗑</button>';
-      return '<div class="reply-item">' +
-        '<div class="ri-header">' +
-        '<span class="ri-author">' + escHtml(r.author) + '</span>' +
-        '<span class="ri-time">' + formatTime(r.createdAt) + '</span>' +
-        '</div>' +
-        replyToHtml +
-        '<div class="ri-body">' + escHtml(r.content) + '</div>' +
-        '<div class="ri-actions">' +
-        '<button class="ri-action-btn' + (rLiked ? ' liked' : '') + '" onclick="handleReplyLike(\'' + topicId + '\',\'' + r.id + '\')">' +
-        '<svg viewBox="0 0 24 24" fill="' + (rLiked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
-        ' <span class="count">' + rLikes + '</span>' +
-        '</button>' +
-        '<button class="ri-action-btn" onclick="quoteReply(\'' + topicId + '\',\'' + r.id + '\',\'' + escHtml(r.author).replace(/'/g, "\\'") + '\')">💬 回复</button>' +
-        delBtn +
-        '</div>' +
-        '</div>';
-    }).join('');
-  }
-
-  function hideTopicDetail() {
-    document.getElementById('forumDetailView').innerHTML = '';
-    document.getElementById('forumDetailView').style.display = 'none';
-    document.getElementById('forumListView').style.display = 'block';
-    document.getElementById('forumCreateView').style.display = 'none';
-    renderTopicList();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // ── 发布帖子 ──
-  function showCreatePost() {
-    if (!requireLogin()) return;
-    document.getElementById('forumListView').style.display = 'none';
-    document.getElementById('forumDetailView').style.display = 'none';
-    document.getElementById('forumCreateView').style.display = 'block';
-    document.getElementById('postTitle').value = '';
-    document.getElementById('postContent').value = '';
-    document.getElementById('postCategory').value = 'minimalism';
-    document.getElementById('createForbiddenNotice').style.display = 'none';
-    document.getElementById('postCharCount').textContent = '0';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // 绑定字数统计
-    var pt = document.getElementById('postTitle');
-    var pc = document.getElementById('postContent');
-    if (pt) pt.addEventListener('input', function() { updatePostCharCount(); });
-    if (pc) pc.addEventListener('input', function() { updatePostCharCount(); });
-  }
-
-  function updatePostCharCount() {
-    var pc = document.getElementById('postContent');
-    document.getElementById('postCharCount').textContent = pc ? pc.value.length : 0;
-  }
-
-  function hideCreatePost() {
-    document.getElementById('forumCreateView').style.display = 'none';
-    document.getElementById('forumListView').style.display = 'block';
-    document.getElementById('forumDetailView').style.display = 'none';
-    renderTopicList();
-  }
-
-  function submitPost() {
-    var title = document.getElementById('postTitle').value.trim();
-    var content = document.getElementById('postContent').value.trim();
-    var category = document.getElementById('postCategory').value;
-
-    if (!title) { alert('请输入帖子标题'); return; }
-    if (!content) { alert('请输入帖子内容'); return; }
-
-    var fullText = title + content;
-    if (hasForbiddenContent(fullText)) {
-      var notice = document.getElementById('createForbiddenNotice');
-      notice.style.display = 'block';
-      notice.innerHTML = '<div class="forbidden-notice">⚠️ 内容包含违规信息（涉政、涉黄、违法等），系统已自动屏蔽。请修改后重试。</div>';
-      return;
-    }
-
-    var topics = loadTopics();
-    var newTopic = {
-      id: generateId(),
-      title: title.slice(0, 80),
-      content: content,
-      category: category,
-      author: getForumUser(),
-      createdAt: Date.now(),
-      views: 0,
-      pinned: false
-    };
-    topics.unshift(newTopic);
-    saveTopics(topics);
-
-    hideCreatePost();
-    setTimeout(function() { setForumFilter('all'); }, 50);
-  }
-
-  // ── 回复帖子 ──
-  var replyQuoteTarget = null; // { id, author }
-
-  function submitReply(topicId) {
-    var input = document.getElementById('replyInput');
-    var text = (input.value || '').trim();
-    if (!text) { alert('请输入回复内容'); return; }
-
-    if (hasForbiddenContent(text)) {
-      var notice = document.getElementById('replyForbiddenNotice');
-      notice.style.display = 'block';
-      notice.innerHTML = '<div class="forbidden-notice">⚠️ 内容包含违规信息，系统已自动屏蔽。请修改后重试。</div>';
-      return;
-    }
-
-    var replies = loadReplies(topicId);
-    var newReply = {
-      id: generateId(),
-      content: text.slice(0, 2000),
-      author: getForumUser(),
-      createdAt: Date.now(),
-      replyTo: replyQuoteTarget ? replyQuoteTarget.author : null
-    };
-    replies.push(newReply);
-    saveReplies(topicId, replies);
-    replyQuoteTarget = null;
-
-    // Refresh detail
-    showTopicDetail(topicId);
-  }
-
-  function quoteReply(topicId, replyId, author) {
-    replyQuoteTarget = { id: replyId, author: author };
-    var ri = document.getElementById('replyInput');
-    if (ri) {
-      ri.focus();
-      ri.value = '';
-      ri.placeholder = '回复 @' + author + '...';
-    }
-  }
-
-  function deleteTopic(topicId) {
-    if (!confirm('确定删除这个帖子吗？所有回复也会一并删除。')) return;
-    var topics = loadTopics();
-    var idx = topics.findIndex(function(t) { return t.id === topicId; });
-    if (idx !== -1) {
-      topics.splice(idx, 1);
-      saveTopics(topics);
-    }
-    localStorage.removeItem(FORUM_REPLIES_KEY + topicId);
-    hideTopicDetail();
-  }
-
-  function deleteReply(topicId, replyId) {
-    if (!confirm('确定删除这条回复？')) return;
-    var replies = loadReplies(topicId);
-    var idx = replies.findIndex(function(r) { return r.id === replyId; });
-    if (idx !== -1) {
-      replies.splice(idx, 1);
-      saveReplies(topicId, replies);
-    }
-    showTopicDetail(topicId);
-  }
-
-  // ── 点赞 ──
-  function handleLike(type, id) {
-    var result = toggleLike(type, id);
-    if (result === false) return;
-    // Re-render current view
-    if (document.getElementById('forumDetailView').style.display === 'block') {
-      showTopicDetail(id);
-    } else {
-      renderTopicList();
-    }
-  }
-
-  function handleReplyLike(topicId, replyId) {
-    var result = toggleLike('reply', replyId);
-    if (result === false) return;
-    showTopicDetail(topicId);
-  }
-
-  // ── 转发/分享 ──
-  function shareTopic(topicId, title) {
-    var url = window.location.href.split('#')[0] + '#page-forum&topic=' + topicId;
-    var text = '🍊 桔子社区 · ' + title + '\n' + url;
-
-    // Try clipboard API
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function() {
-        showToast('已复制到剪贴板，分享给朋友吧 🎉');
-      }).catch(function() {
-        fallbackCopy(text);
-      });
-    } else {
-      fallbackCopy(text);
-    }
-  }
-
-  function fallbackCopy(text) {
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try {
-      document.execCommand('copy');
-      showToast('已复制到剪贴板，分享给朋友吧 🎉');
-    } catch(e) {
-      showToast('复制失败，请手动复制链接');
-    }
-    document.body.removeChild(ta);
+  // ── HTML 转义 ──
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
   // ── Toast 提示 ──
@@ -2460,31 +1392,7 @@
     }, 2500);
   }
 
-  // ── 工具函数 ──
-  function formatTime(ts) {
-    if (!ts) return '';
-    var d = new Date(ts);
-    var now = new Date();
-    var diff = Math.floor((now - d) / 1000);
-    if (diff < 60) return '刚刚';
-    if (diff < 3600) return Math.floor(diff / 60) + '分钟前';
-    if (diff < 86400) return Math.floor(diff / 3600) + '小时前';
-    if (diff < 172800) return '昨天';
-    return d.toLocaleString('zh-CN', { month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit' });
-  }
-
-  // ── HTML 转义 ──
-  function escHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  // 页面加载时初始化论坛
-  (function initForum() {
-    renderTopicList();
-  })();
-
-  // ── 下载付费流程（v8.8 新版）──
+  // ── 下载付费流程（v9.43 新版）──
   var downloadBtn = document.getElementById('downloadBtn');
   var paySection = document.getElementById('paySection');
   var payQRContainer = document.getElementById('payQRContainer');
