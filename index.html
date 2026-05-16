@@ -38,34 +38,13 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Main header (nav bar with logo) ── */
-  .main-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 24px 0 0;
-  }
-
-  .main-header .header-logo {
-    height: 24px;
-    width: auto;
-    cursor: pointer;
-    transition: opacity 0.2s;
-    vertical-align: middle;
-  }
-
-  .main-header .header-logo:hover {
-    opacity: 0.8;
-  }
-
-  /* ── Nav Banner (logo + slogan) ── */
+  /* ── Nav Banner (logo + slogan, top-left) ── */
   .nav-banner {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 16px 0 20px;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 20px 24px 16px;
   }
 
   .nav-banner .banner-logo {
@@ -914,14 +893,10 @@
 <body>
 
 <!-- ═══════════ HEADER ═══════════ -->
-<div class="main-header">
-  <a href="#page-nav" onclick="switchTab('nav');return false">
-    <img src="logo.png" alt="桔子" class="header-logo">
-  </a>
-</div>
-
 <div class="nav-banner">
-  <img src="logo.png" alt="桔子" class="banner-logo">
+  <a href="#page-nav" onclick="switchTab('nav');return false">
+    <img src="logo.png" alt="桔子" class="banner-logo">
+  </a>
   <span class="banner-slogan">我们喜欢简单的生活！</span>
 </div>
 
