@@ -50,13 +50,14 @@
     align-items: center;
     justify-content: flex-start;
     gap: 16px;
-    padding: 20px 0 27px;
-    padding-left: 1em;
+    padding: 20px 0 34px;
+    /* Align with section-title text (智能/工具/学习), then shift left by 2 chars */
+    padding-left: calc(24px + 4px + 14px + 6px - 2em);
     box-sizing: border-box;
   }
 
   .nav-banner .banner-logo {
-    height: 48px;
+    height: 36px;
     width: auto;
     flex-shrink: 0;
     cursor: pointer;
@@ -135,6 +136,7 @@
     display: flex;
     justify-content: center;
     margin-bottom: 48px;
+    width: 100%;
   }
 
   .nav-page .search-wrap {
@@ -280,6 +282,10 @@
     z-index: 10;
     display: flex;
     align-items: stretch;
+  }
+
+  .search-engine-btn {
+    border-radius: var(--radius) 0 0 var(--radius);
   }
 
   /* Search Input */
@@ -973,6 +979,108 @@
     background: #f5f5f5;
   }
 
+  .nav-contact-btn {
+    background: none;
+    border: none;
+    color: #1a1a1a;
+    font-size: 14px;
+    font-weight: 900;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    letter-spacing: 0.06em;
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'STHeiti', 'Noto Sans SC', sans-serif;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-contact-btn:hover {
+    color: #000;
+    background: #f5f5f5;
+  }
+
+  /* ── Contact Modal ── */
+  .contact-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+  }
+
+  .contact-modal-overlay.show { display: flex; }
+
+  .contact-modal-box {
+    background: var(--bg-card);
+    border-radius: 12px;
+    width: 400px;
+    max-width: 94vw;
+    padding: 32px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    animation: fadeUp 0.3s ease;
+    text-align: center;
+  }
+
+  .contact-modal-box h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .contact-item:last-child { margin-bottom: 0; }
+
+  .contact-item .ci-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .contact-item .ci-label {
+    font-weight: 600;
+    color: #888;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+
+  .contact-item .ci-value {
+    font-weight: 500;
+  }
+
+  .contact-close-btn {
+    margin-top: 24px;
+    padding: 8px 32px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .contact-close-btn:hover { background: #d4752f; }
+
   .mod-section .mod-hint {
     font-size: 11px;
     color: var(--text-dim);
@@ -1484,7 +1592,37 @@
     </svg>
     设置
   </button>
+  <span class="sep">·</span>
+  <button class="nav-contact-btn" onclick="openContact()">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+      <polyline points="22,6 12,13 2,6"/>
+    </svg>
+    联系方式
+  </button>
 </footer>
+
+<!-- Contact Modal -->
+<div class="contact-modal-overlay" id="contactModalOverlay">
+  <div class="contact-modal-box">
+    <h2>📬 联系方式</h2>
+    <div class="contact-item">
+      <span class="ci-icon">📧</span>
+      <div>
+        <span class="ci-label">邮箱</span>
+        <span class="ci-value">271880723@qq.com</span>
+      </div>
+    </div>
+    <div class="contact-item">
+      <span class="ci-icon">💬</span>
+      <div>
+        <span class="ci-label">微信</span>
+        <span class="ci-value">superd124</span>
+      </div>
+    </div>
+    <button class="contact-close-btn" onclick="closeContact()">关闭</button>
+  </div>
+</div>
 
 <script>
   // ── 全局页面切换 ──
@@ -1497,6 +1635,25 @@
     document.getElementById('page-' + pageName).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // ── 联系方式弹窗 ──
+  window.openContact = function() {
+    document.getElementById('contactModalOverlay').classList.add('show');
+  };
+
+  window.closeContact = function() {
+    document.getElementById('contactModalOverlay').classList.remove('show');
+  };
+
+  // 点击遮罩层关闭
+  document.addEventListener('DOMContentLoaded', function() {
+    var overlay = document.getElementById('contactModalOverlay');
+    if (overlay) {
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) closeContact();
+      });
+    }
+  });
 
   // ── Tab 点击绑定 ──
   var tabs = document.querySelectorAll('.nav-tab');
