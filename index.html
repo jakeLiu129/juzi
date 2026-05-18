@@ -22,6 +22,56 @@
     --border-hover: #ddd;
     --orange-light: #fff7ed;
     --radius: 8px;
+    --search-bg: #ffffff;
+    --search-border: #1a1a1a;
+    --dark-border: #1a1a1a;
+    --input-bg: transparent;
+    --btn-dark-bg: #1a1a1a;
+    --btn-dark-color: #fff;
+    --footer-color: #1a1a1a;
+    --section-title-color: #1a1a1a;
+    --site-color: #555;
+    --trial-body-color: #555;
+    --header-bg: var(--bg);
+    --dropdown-bg: #ffffff;
+    --dropdown-hover: #f0f0f0;
+    --tab-active-color: #1a1a1a;
+    --tab-active-border: #1a1a1a;
+    --modal-bg: var(--bg-card);
+    --contact-item-bg: #f9f9f9;
+    --shdw-color: rgba(0,0,0,0.06);
+  }
+
+  body.dark {
+    --bg: #1a1a1a;
+    --bg-card: #242424;
+    --text: #e8e6e3;
+    --text-muted: #999;
+    --text-dim: #777;
+    --accent: #f0a04b;
+    --accent-dim: #d4852f;
+    --accent-light: #2a2018;
+    --border: #333;
+    --border-hover: #444;
+    --orange-light: #2a2018;
+    --search-bg: #242424;
+    --search-border: #555;
+    --dark-border: #555;
+    --input-bg: #242424;
+    --btn-dark-bg: #e8e6e3;
+    --btn-dark-color: #1a1a1a;
+    --footer-color: #e8e6e3;
+    --section-title-color: #e8e6e3;
+    --site-color: #bbb;
+    --trial-body-color: #bbb;
+    --header-bg: #1a1a1a;
+    --dropdown-bg: #2a2a2a;
+    --dropdown-hover: #333;
+    --tab-active-color: #e8e6e3;
+    --tab-active-border: #e8e6e3;
+    --modal-bg: #242424;
+    --contact-item-bg: #2a2a2a;
+    --shdw-color: rgba(0,0,0,0.3);
   }
 
   @font-face {
@@ -75,6 +125,73 @@
     letter-spacing: 0.08em;
   }
 
+  /* ── Theme Toggle (sun/moon) ── */
+  .theme-toggle {
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--bg-card);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(232,133,58,0.25);
+    transform: scale(1.08);
+  }
+
+  .theme-toggle:active {
+    transform: scale(0.95);
+  }
+
+  .theme-toggle .sun-icon,
+  .theme-toggle .moon-icon {
+    position: absolute;
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle .sun-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0);
+  }
+
+  .theme-toggle .moon-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  body.dark .theme-toggle .sun-icon {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  body.dark .theme-toggle .moon-icon {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0);
+  }
+
+  body.dark .theme-toggle {
+    background: #2a2a2a;
+    border-color: #555;
+  }
+
+  body.dark .theme-toggle:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px rgba(240,160,75,0.35);
+  }
+
   /* ── Nav wrap ── */
   .main-nav-wrap {
     border-bottom: 1px solid var(--border);
@@ -108,7 +225,7 @@
   }
 
   .nav-tab:hover { color: var(--text); }
-  .nav-tab.active { color: #1a1a1a; font-weight: 900; font-size: 18px; font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif; border-bottom-color: #1a1a1a; }
+  .nav-tab.active { color: var(--tab-active-color); font-weight: 900; font-size: 18px; font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif; border-bottom-color: var(--tab-active-border); }
 
   /* ── Page Container ── */
   .container {
@@ -140,7 +257,7 @@
   .nav-page .search-wrap {
     display: inline-flex;
     align-items: stretch;
-    border: 2px solid #1a1a1a;
+    border: 2px solid var(--dark-border);
     border-radius: var(--radius);
     background: var(--bg-card);
     max-width: 560px;
@@ -149,8 +266,8 @@
   }
 
   .nav-page .search-wrap:focus-within {
-    border-color: #000;
-    box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
+    border-color: var(--text);
+    box-shadow: 0 0 0 4px rgba(128,128,128,0.15);
   }
 
   /* Engine Selector */
@@ -159,21 +276,21 @@
     align-items: center;
     gap: 4px;
     padding: 10px 14px;
-    background: #fff;
+    background: var(--search-bg);
     border: none;
-    border-right: 2px solid #1a1a1a;
+    border-right: 2px solid var(--dark-border);
     border-radius: var(--radius) 0 0 var(--radius);
     cursor: pointer;
     font-size: 14px;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--text);
     white-space: nowrap;
     transition: background 0.2s;
     font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
 
   .search-engine-btn:hover {
-    background: #f0f0f0;
+    background: var(--dropdown-hover);
   }
 
   .search-engine-btn .favicon {
@@ -184,6 +301,10 @@
     transition: filter 0.2s ease;
   }
 
+  body.dark .search-engine-btn .favicon {
+    filter: invert(0.85);
+  }
+
   .search-engine-btn:hover .favicon {
     filter: none;
   }
@@ -192,7 +313,7 @@
     width: 14px;
     height: 14px;
     opacity: 1;
-    color: #1a1a1a;
+    color: var(--text);
     stroke-width: 2.5;
     transition: transform 0.2s;
   }
@@ -205,10 +326,10 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: var(--bg-card);
-    border: 2px solid #1a1a1a;
+    background: var(--dropdown-bg);
+    border: 2px solid var(--dark-border);
     border-radius: var(--radius);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 16px var(--shdw-color);
     display: none;
     min-width: 180px;
     z-index: 100;
@@ -227,7 +348,7 @@
     padding: 10px 14px;
     font-size: 14px;
     font-weight: 600;
-    color: #333;
+    color: var(--text);
     cursor: pointer;
     transition: background 0.2s;
     font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
@@ -242,13 +363,13 @@
   }
 
   .engine-option:hover {
-    background: #f0f0f0;
+    background: var(--dropdown-hover);
   }
 
   .engine-option.active {
-    color: #1a1a1a;
+    color: var(--text);
     font-weight: 700;
-    background: #f0f0f0;
+    background: var(--dropdown-hover);
   }
 
   .engine-option .favicon {
@@ -289,7 +410,7 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    color: #1a1a1a;
+    color: var(--dark-border);
   }
 
   .nav-page .search-input {
@@ -298,13 +419,13 @@
     outline: none;
     padding: 12px 12px;
     font-size: 15px;
-    background: transparent;
+    background: var(--input-bg);
     color: var(--text);
     font-weight: 600;
     font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
 
-  .nav-page .search-input::placeholder { color: #999; font-weight: 600; }
+  .nav-page .search-input::placeholder { color: var(--text-muted); font-weight: 600; }
 
   /* Search Button */
   .search-btn {
@@ -313,8 +434,8 @@
     justify-content: center;
     gap: 6px;
     padding: 10px 18px;
-    background: #1a1a1a;
-    color: #fff;
+    background: var(--btn-dark-bg);
+    color: var(--btn-dark-color);
     border: none;
     cursor: pointer;
     font-size: 14px;
@@ -325,7 +446,7 @@
   }
 
   .search-btn:hover {
-    background: #000;
+    filter: brightness(0.85);
   }
 
   .nav-page .section {
@@ -336,7 +457,7 @@
     font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
     font-size: 16px;
     font-weight: 900;
-    color: #1a1a1a;
+    color: var(--section-title-color);
     letter-spacing: 0.06em;
     display: inline-flex;
     align-items: center;
@@ -356,7 +477,7 @@
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: #555;
+    color: var(--site-color);
     padding: 7px 4px;
     text-decoration: none;
     border-radius: 4px;
@@ -456,7 +577,7 @@
 
   .book-featured .book-info .desc {
     font-size: 14px;
-    color: #555;
+    color: var(--trial-body-color);
     line-height: 1.7;
     margin-bottom: 20px;
   }
@@ -515,7 +636,7 @@
     font-weight: 900;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #1a1a1a;
+    border-bottom: 2px solid var(--dark-border);
     letter-spacing: 0.04em;
     font-family: 'PingFang SC', 'Microsoft YaHei', 'SimHei', 'Heiti SC', 'Noto Sans SC', sans-serif;
   }
@@ -560,7 +681,7 @@
 
   .public-book-card .pb-desc {
     font-size: 13px;
-    color: #666;
+    color: var(--site-color);
     line-height: 1.6;
     margin-bottom: 14px;
   }
@@ -615,7 +736,7 @@
   }
 
   .trial-chapter-header:hover {
-    background: #fafafa;
+    background: var(--dropdown-hover);
   }
 
   .trial-chapter-num {
@@ -655,10 +776,16 @@
 
   .trial-chapter-body p {
     font-size: 18px;
-    color: #555;
+    color: var(--trial-body-color);
     line-height: 1.9;
     margin-bottom: 20px;
     text-indent: 2em;
+  }
+
+  body.dark .trial-chapter-body p.trial-cta {
+    background: linear-gradient(135deg, #2a2018, #2a2018);
+    border-left-color: var(--accent);
+    color: var(--accent);
   }
 
   .trial-chapter-body p.trial-cta {
@@ -711,7 +838,7 @@
   .product-card .p-img {
     width: 100%;
     min-height: 60px;
-    background: #f9f9f9;
+    background: var(--contact-item-bg);
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -719,6 +846,10 @@
     margin-bottom: 16px;
     font-size: 48px;
     overflow: hidden;
+  }
+
+  body.dark .product-card .p-img {
+    background: #2a2a2a;
   }
 
   .product-card .p-img img {
@@ -743,7 +874,7 @@
 
   .product-card .p-review {
     font-size: 13px;
-    color: #555;
+    color: var(--site-color);
     line-height: 1.7;
     flex: 1;
     margin-bottom: 14px;
@@ -772,7 +903,7 @@
     text-align: center;
     padding: 16px 0 32px;
     border-top: 1px solid var(--border);
-    color: #1a1a1a;
+    color: var(--footer-color);
     font-size: 14px;
     font-weight: 900;
     letter-spacing: 0.06em;
@@ -785,7 +916,7 @@
   }
 
   footer a {
-    color: #1a1a1a;
+    color: var(--footer-color);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -793,7 +924,7 @@
     font-weight: 900;
   }
 
-  footer a:hover { color: #000; background: #f5f5f5; }
+  footer a:hover { color: var(--text); background: var(--hover, #f5f5f5); }
 
   footer .sep { margin: 0 8px; }
 
@@ -876,6 +1007,10 @@
     letter-spacing: 0.04em;
   }
 
+  body.dark .mod-section-title {
+    color: var(--accent);
+  }
+
   .mod-row {
     display: flex;
     gap: 8px;
@@ -887,7 +1022,7 @@
 
   .mod-row label {
     font-size: 13px;
-    color: #555;
+    color: var(--site-color);
     min-width: 70px;
     flex-shrink: 0;
   }
@@ -900,6 +1035,8 @@
     font-size: 13px;
     outline: none;
     font-family: inherit;
+    background: var(--input-bg);
+    color: var(--text);
     transition: border-color 0.2s;
   }
 
@@ -932,11 +1069,11 @@
     cursor: pointer;
     border: 1px solid var(--border);
     background: var(--bg-card);
-    color: #555;
+    color: var(--site-color);
     transition: all 0.2s;
   }
 
-  .mod-btn:hover { background: #f5f5f5; }
+  .mod-btn:hover { background: var(--dropdown-hover); }
 
   .mod-btn.primary {
     background: var(--accent);
@@ -951,12 +1088,12 @@
     border-color: #fdd;
   }
 
-  .mod-btn.danger:hover { background: #fef2f2; }
+  .mod-btn.danger:hover { background: var(--accent-light); }
 
   .nav-settings-btn {
     background: none;
     border: none;
-    color: #1a1a1a;
+    color: var(--footer-color);
     font-size: 14px;
     font-weight: 900;
     cursor: pointer;
@@ -971,14 +1108,14 @@
   }
 
   .nav-settings-btn:hover {
-    color: #000;
-    background: #f5f5f5;
+    color: var(--text);
+    background: var(--dropdown-hover);
   }
 
   .nav-contact-btn {
     background: none;
     border: none;
-    color: #1a1a1a;
+    color: var(--footer-color);
     font-size: 14px;
     font-weight: 900;
     cursor: pointer;
@@ -993,8 +1130,8 @@
   }
 
   .nav-contact-btn:hover {
-    color: #000;
-    background: #f5f5f5;
+    color: var(--text);
+    background: var(--dropdown-hover);
   }
 
   /* ── Contact Modal ── */
@@ -1037,11 +1174,11 @@
     align-items: center;
     gap: 10px;
     padding: 14px 16px;
-    background: #f9f9f9;
+    background: var(--contact-item-bg);
     border-radius: 8px;
     margin-bottom: 12px;
     font-size: 14px;
-    color: #333;
+    color: var(--text);
   }
 
   .contact-item:last-child { margin-bottom: 0; }
@@ -1135,6 +1272,26 @@
     <img src="logo.png" alt="桔子" class="banner-logo">
   </a>
   <span class="banner-slogan">我们喜欢简单的生活</span>
+  <button class="theme-toggle" id="themeToggle" title="切换白天/暗黑模式" aria-label="切换白天/暗黑模式">
+    <span class="sun-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </span>
+    <span class="moon-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </span>
+  </button>
 </div>
 </div>
 
@@ -1263,17 +1420,17 @@
         </div>
         <div id="paySection" style="display:none;margin-top:16px;">
           <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center;">
-            <p style="font-size:15px;color:#333;margin-bottom:16px;">📖 请扫码支付 <strong style="color:var(--accent);">¥1.99</strong>,付款成功后请点击付款码,即可跳转到电子书下载地址</p>
+            <p style="font-size:15px;color:var(--text);margin-bottom:16px;">📖 请扫码支付 <strong style="color:var(--accent);">¥1.99</strong>,付款成功后请点击付款码,即可跳转到电子书下载地址</p>
             <div id="payQRContainer">
               <img src="1.99收款码.jpg" alt="微信收款码" id="wechatPayImg" style="width:220px;height:auto;border-radius:8px;border:1px solid var(--border);margin-bottom:16px;cursor:pointer;transition:opacity 0.3s,transform 0.1s;">
               <p style="font-size:12px;color:var(--text-dim);margin-top:12px;">付款成功后,点击上面的付款码即可跳转 🍊</p>
               <p style="font-size:11px;color:var(--text-muted);margin-top:6px;" id="attemptHint"></p>
             </div>
             <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:var(--radius);padding:24px;display:none;" id="downloadLinkSection">
-              <p style="font-size:15px;color:#333;margin-bottom:16px;">🎉 已收到,请到百度网盘下载《少,就是多》PDF电子书:</p>
-              <div style="background:#fff;border:1px solid #bbf7d0;border-radius:8px;padding:16px;">
-                <p style="font-size:13px;color:#555;word-break:break-all;">📎 <a href="https://pan.baidu.com/s/1vpzDcaD21RPXou-0s2VF9Q" target="_blank" rel="noopener" style="color:var(--accent);">https://pan.baidu.com/s/1vpzDcaD21RPXou-0s2VF9Q</a></p>
-                <p style="font-size:13px;color:#555;margin-top:6px;">🔑 提取码:<strong style="color:var(--accent);">1248</strong></p>
+              <p style="font-size:15px;color:var(--text);margin-bottom:16px;">🎉 已收到,请到百度网盘下载《少,就是多》PDF电子书:</p>
+              <div style="background:var(--bg-card);border:1px solid #bbf7d0;border-radius:8px;padding:16px;">
+                <p style="font-size:13px;color:var(--trial-body-color);word-break:break-all;">📎 <a href="https://pan.baidu.com/s/1vpzDcaD21RPXou-0s2VF9Q" target="_blank" rel="noopener" style="color:var(--accent);">https://pan.baidu.com/s/1vpzDcaD21RPXou-0s2VF9Q</a></p>
+                <p style="font-size:13px;color:var(--trial-body-color);margin-top:6px;">🔑 提取码:<strong style="color:var(--accent);">1248</strong></p>
               </div>
             </div>
           </div>
@@ -2094,6 +2251,42 @@
 
 
   // ═══════════════ 账号系统已移除 (v9.52) ═══════════════
+
+  // ── 主题切换 (v9.83) ──
+  (function initTheme() {
+    var THEME_KEY = 'juzi_theme';
+    var toggle = document.getElementById('themeToggle');
+
+    function applyTheme(mode) {
+      if (mode === 'dark') {
+        document.body.classList.add('dark');
+      } else {
+        document.body.classList.remove('dark');
+      }
+    }
+
+    // 读取保存的设置,默认白天模式
+    var saved = localStorage.getItem(THEME_KEY);
+    if (saved === 'dark') {
+      applyTheme('dark');
+    } else {
+      applyTheme('light');
+    }
+
+    // 点击切换
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var isDark = document.body.classList.contains('dark');
+        if (isDark) {
+          applyTheme('light');
+          localStorage.setItem(THEME_KEY, 'light');
+        } else {
+          applyTheme('dark');
+          localStorage.setItem(THEME_KEY, 'dark');
+        }
+      });
+    }
+  })();
 
   // ── 试读章节展开/折叠 ──
   window.toggleTrialChapter = function(header) {
