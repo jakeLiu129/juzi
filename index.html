@@ -90,8 +90,6 @@
 
   /* ── Nav Banner (logo + slogan, top-left) ── */
   .nav-banner-wrap {
-    max-width: 1000px;
-    margin: 0 auto;
     padding: 0 24px;
     position: relative;
   }
@@ -101,6 +99,7 @@
     align-items: center;
     gap: 16px;
     padding: 20px 0 27px;
+    padding-left: calc(5em - 24px);
     box-sizing: border-box;
   }
 
@@ -110,7 +109,6 @@
     flex-shrink: 0;
     cursor: pointer;
     transition: opacity 0.2s;
-    margin-left: 4px;
   }
 
   .nav-banner .banner-logo:hover {
