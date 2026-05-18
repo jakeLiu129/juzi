@@ -710,7 +710,7 @@
 
   .product-card .p-img {
     width: 100%;
-    height: 180px;
+    min-height: 60px;
     background: #f9f9f9;
     border-radius: 4px;
     display: flex;
@@ -722,8 +722,10 @@
   }
 
   .product-card .p-img img {
-    width: 100%;
-    height: 100%;
+    width: auto;
+    height: auto;
+    max-width: 60px;
+    max-height: 60px;
     object-fit: contain;
   }
 
